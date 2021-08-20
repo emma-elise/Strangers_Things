@@ -1,14 +1,15 @@
 import React from 'react';
 import Delete from './delete';
+import PostsList from './PostsList';
 
 const Post = (props) =>{
-    const {posts, loginStatus} = props
+    const {posts, loginStatus, setPostList, postList} = props
     return <div> 
         <h3>{posts.title}</h3>
         <div>Location- {posts.location}</div>
         <div>{posts.description}</div>
         <div>Price- {posts.price}</div>
-        {loginStatus ? <Delete id = {posts._id}/>: null}
+        {loginStatus ? <Delete postList={postList} setPostList ={setPostList} id = {posts._id}/>: null}
          </div>
 }
 

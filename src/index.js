@@ -11,6 +11,8 @@ const App = () =>{
     const [userData, setUserData] = useState([])
     const [LocalToken, setLocalToken] = useState([])
     const [loginStatus, setLoginStatus] = useState(false)
+    
+
     useEffect( ()=>{
        fetchPosts()
        .then((val)=>{
@@ -27,7 +29,7 @@ const App = () =>{
     )
     return <div className="app">
     {/* for the main page, there will be another PostsList comp used for Users posts */}
-    <PostsList postList = {postList} loginStatus={loginStatus}></PostsList>
+    <PostsList postList = {postList} loginStatus={loginStatus} postList ={postList} setPostList = {setPostList}></PostsList>
     </div>
 }
 
