@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { fetchPosts } from './api';
+import Post from './components/Post';
  
 
 const App = () =>{
@@ -23,7 +24,13 @@ const App = () =>{
     )
     console.log(postList,'here')
 
-    return <h1> Test html </h1>
+    return <div>
+        <h1> Test html </h1>
+        {postList.map((post)=> 
+        {return <Post key={post._id} posts={post} />
+        })}
+
+    </div>
 }
 
 ReactDOM.render(
