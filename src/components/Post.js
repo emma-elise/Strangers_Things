@@ -1,13 +1,14 @@
 import React from 'react';
-
+import Delete from './delete';
 
 const Post = (props) =>{
-    const {posts} = props
+    const {posts, loginStatus} = props
     return <div> 
         <h3>{posts.title}</h3>
-        <div>{posts.location}</div>
+        <div>Location- {posts.location}</div>
         <div>{posts.description}</div>
-        <div>{posts.price}</div>
+        <div>Price- {posts.price}</div>
+        {loginStatus ? <Delete id = {posts._id}/>: null}
          </div>
 }
 
