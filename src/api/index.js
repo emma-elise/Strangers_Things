@@ -36,7 +36,6 @@ export async function fetchUserData() {
   try {
     const response = await fetch(url, headers);
     const obj = await response.json();
-    
     return obj;
   } catch (error) {
     throw error;
