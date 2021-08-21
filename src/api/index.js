@@ -20,7 +20,6 @@ export async function fetchPosts() {
     const response = await fetch(url);
     const obj = await response.json();
     const posts = obj.data.posts;
-    console.log(posts, 'fetchposts')
     return posts;
   } catch (error) {
     throw error;
