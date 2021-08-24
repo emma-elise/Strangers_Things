@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { fetchPosts } from "./api";
+import { fetchPosts, fetchUserData } from "./api";
 import PostsList from "./components/PostsList";
+import NewPost from "./components/NewPost";
+import Login from "./components/login";
 
 const App = () => {
   const [postList, setPostList] = useState([]);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({});
   const [LocalToken, setLocalToken] = useState([]);
   const [loginStatus, setLoginStatus] = useState(false);
+  const [userposts, setuserPosts] = useState([]);
 
   useEffect(() => {
     fetchPosts()
       .then((val) => {
         setPostList(val);
+      })
+      .catch((error) => console.error(error));
+    // fetching user just for testing right now
+    fetchUserData()
+      .then((val) => {
+        setUserData(val);
+        setuserPosts(val.data.posts.filter((post) => post.active));
       })
       .catch((error) => console.error(error));
 
@@ -21,17 +31,27 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
+  console.log(userposts);
   return (
     <div className="app">
+      <Login></Login>
+
       {/* for the main page, there will be another PostsList comp used for Users posts */}
       <PostsList
         postList={postList}
         loginStatus={loginStatus}
-        postList={postList}
         setPostList={setPostList}
       ></PostsList>
+      {userData.data ? (
+        <PostsList
+          postList={userposts}
+          loginStatus={true}
+          setuserPosts={setuserPosts}
+        ></PostsList>
+      ) : null}
+      {/* <NewPost />  */}
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById("root"));
