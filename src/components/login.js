@@ -1,37 +1,37 @@
 import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 
-// TODO: Work on Route path and endpoints
-
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const validatateForm = () => email.length > 0 && password.length > 0;
-  const handleSubmit = (event) => event.preventDefault();
-
+const Login = ({ setAuthenticated }) => {
+  const [submitForm, setSubmitForm] = useState(false);
+  const userLoggedIn = false;
+  // form inputs
+  const authenticate = (event) => {
+    event.preventDefault;
+    // Check that the user entered stuff into the inputs
+    // Validate data
+    // Make a ajax request to the backend
+    // Backend will return a response letting us know if the user was authenticated or not
+    console.log("form submitted");
+    setSubmitForm(true);
+  };
+  // if (submitForm) return <Redirect to="" />;
   return (
-    <div className="Login">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group size="large" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group size="large" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </Form.Group>
-        <Button block size="large" type="submit" disabled={!validateForm()}>
-          Login
-        </Button>
-      </Form>
-    </div>
+    <section className="login">
+      {!userLoggedIn && <h1>Login</h1>}
+      <form onSubmit={authenticate}>
+        <div>
+          <label>Username: </label>
+          <input type="text" />
+        </div>
+        <div>
+          <label>Password: </label>
+          <input type="text" />
+        </div>
+        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
+      </form>
+    </section>
   );
 };
+
+export default Login;
