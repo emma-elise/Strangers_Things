@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 // const NewPost = (props)=>{
 //     const [title, setTitle] =useState('')
 //     const [description, setDescription] = useState('')

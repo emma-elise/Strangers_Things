@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { fetchRegisterUser, fetchLoginUser } from "../api";
 
 const Login = ({ setAuthenticated }) => {
   const [submitForm, setSubmitForm] = useState(false);
