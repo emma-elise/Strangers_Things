@@ -7,6 +7,7 @@ const Login = ({ setAuthenticated }) => {
   // form inputs
   const authenticate = (event) => {
     event.preventDefault;
+
     // Check that the user entered stuff into the inputs
     // Validate data
     // Make a ajax request to the backend

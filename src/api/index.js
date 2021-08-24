@@ -61,4 +61,30 @@ const fetchRegisterUser = async () => {
   }
 };
 
-export { BASE_URL, checkLogin, fetchPosts, fetchUserData, fetchRegisterUser };
+const fetchLoginUser = async () => {
+  const url = `${BASE_URL}/users/login`;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  const body = JSON.stringify({
+    user: {
+      username: "",
+      password: "",
+    },
+  });
+  try {
+    const loginUser = await (await fetch(url, headers, body)).json();
+    return loginUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  BASE_URL,
+  checkLogin,
+  fetchPosts,
+  fetchUserData,
+  fetchRegisterUser,
+  fetchLoginUser,
+};
