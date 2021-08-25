@@ -57,7 +57,7 @@ const App = () => {
               setuserPosts={setuserPosts}
             ></PostsList>
           ) : null}
-          {/* <NewPost />  */}
+          <NewPost setPostList={setPostList} userposts={userposts} postList={postList} setuserPosts={setuserPosts} /> 
         </div>
       </div>
     </Router>

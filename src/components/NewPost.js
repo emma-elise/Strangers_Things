@@ -2,53 +2,74 @@ import React, { useState } from "react";
 
 
 const NewPost = (props)=>{
-    const {loginToken} = props
+    const {loginToken, setuserPosts, setPostList, postList, userposts} = props
     const [submitForm, setSubmitForm] = useState(false);
-    const [title, setTitle] = useState([])
-    const [description, setDescription] = useState([])
-    const [price, setPrice] =  useState([])
-    const [location, setLocation] = useState([])
-    const [willDeliver, setWillDeliver] = useState([])
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [price, setPrice] =  useState('')
+    const [location, setLocation] = useState('')
+    const [willDeliver, setWillDeliver] = useState('')
+    const userLoggedIn = false
     const validationHandler=() => {
         if(title.length>0 && description.length>0 && price.length>0){
             return true
         }
         return false
     }
-    const postHandler = (event) => {
-        event.preventDefault;
-        validationHandler()
+    const postHandler = async (event) => {
+        event.preventDefault();
+        if(validationHandler()){
+            console.log("form submitted");
+            try {
+            const response = await fetch('https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIxMDg1ZDZjYzIzNDAwMTcxN2ExYzAiLCJ1c2VybmFtZSI6InN1cGVybWFuc0JvZHlnYXVyZHMiLCJpYXQiOjE2Mjk1NTQ3ODF9.TGH8VtdQ1VrdlW1HMjhKpBqJr2BL_y9oPkLrAitqP2o`
+            },
+            body: JSON.stringify(
+                {
+                    post: {
+                        title: title,
+                        description: description,
+                        price: price,
+                        ... location && {location: location},
+                        ... willDeliver && {willDeliver: willDeliver}
+                    }
+                }
+            )
+            });
+            
+            const obj = await response.json();
+            console.log(obj)
+            const post = obj.data.post;
+            console.log(postList,'hre')
+            setuserPosts([post, ...userposts])
+            setPostList([post, ...postList])
+            setPostList()
+            setTitle('')
+            setDescription('')
+            setPrice('')
+            setLocation('')
+            setWillDeliver('')
+            }
+            catch (error) {
+            throw error;
+            }
+
+        }
+        
+        else{
+            alert("please fill out forms")
+        }
         // Check that the user entered stuff into the inputs
         // Validate data
         // Make a ajax request to the backend
         // Backend will return a response letting us know if the user was authenticated or not
-        console.log("form submitted");
-        const response = await fetch('https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIxMDg1ZDZjYzIzNDAwMTcxN2ExYzAiLCJ1c2VybmFtZSI6InN1cGVybWFuc0JvZHlnYXVyZHMiLCJpYXQiOjE2Mjk1NTQ3ODF9.TGH8VtdQ1VrdlW1HMjhKpBqJr2BL_y9oPkLrAitqP2o`
-        },
-        body: JSON.stringify(
-            {
-                post: {
-                    title: title,
-                    description: description,
-                    price: price,
-                    location: location,
-                    willDeliver: willDeliver
-                }
-            }
-        )
-        })
-        const data = await response.json()
-        setTitle('')
-        setDescription('')
-        setPrice('')
-        setLocation('')
-        setWillDeliver('')
+        
+       
 
-        setSubmitForm(true);
+        // setSubmitForm(true);
     };
     return (
     <section className="NewPost">
@@ -81,7 +102,7 @@ const NewPost = (props)=>{
         <div>
           <label>Location </label>
           <input type="text"
-          placeholder="Location" 
+          placeholder="Location (optional)" 
           value = {location} 
           onChange={(e)=> setLocation(e.target.value)}
           />
@@ -89,7 +110,7 @@ const NewPost = (props)=>{
         <div>
           <label>Will Deliver?</label>
           <input type="text"
-          placeholder="Will Deliver?" 
+          placeholder="Will Deliver? (optional)" 
           value = {willDeliver} 
           onChange={(e)=> setWillDeliver(e.target.value)}
           />
