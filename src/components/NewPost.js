@@ -99,7 +99,6 @@ const NewPost = (props)=>{
     </section>
   );
 
-
 }
 
 export default NewPost;

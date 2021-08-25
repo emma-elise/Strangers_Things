@@ -55,6 +55,7 @@ const fetchRegisterUser = async () => {
   });
   try {
     const registerUser = await (await fetch(url, headers, body)).json();
+    console.log(registerUser);
     return registerUser;
   } catch (error) {
     throw error;
