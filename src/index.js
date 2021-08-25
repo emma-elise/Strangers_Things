@@ -31,7 +31,7 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
-  console.log(userposts);
+
   return (
     <div className="app">
       <Login></Login>
