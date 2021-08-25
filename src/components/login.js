@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { fetchRegisterUser, fetchLoginUser } from "../api";
 
-const Login = ({ setAuthenticated }) => {
+// const Login = ({ setAuthenticated }) => {
+
+const Login = ({ user }) => {
   const [submitForm, setSubmitForm] = useState(false);
   const userLoggedIn = false;
   // form inputs
   const authenticate = (event) => {
-    event.preventDefault;
+    event.preventDefault();
+    fetchRegisterUser(user);
 
     // Check that the user entered stuff into the inputs
     // Validate data

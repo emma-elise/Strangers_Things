@@ -43,42 +43,37 @@ const App = () => {
           <Link to="/posts">Posts</Link>
           <Link to="/posts/POST_ID/messages">Messages</Link>
         </nav>
-        <div>
-          {/* for the main page, there will be another PostsList comp used for Users posts */}
-          <PostsList
-            postList={postList}
-            loginStatus={loginStatus}
-            setPostList={setPostList}
-          ></PostsList>
-          {userData.data ? (
+        <Switch>
+          <Route path="/users/register">
+            <Login />
+          </Route>
+          <Route path="/users/login">
+            <Login />
+          </Route>
+          <Route path="/posts"></Route>
+          <Route path="posts/POST_ID/messages"></Route>
+          <Route exact path="/">
+            {/* for the main page, there will be another PostsList comp used for Users posts */}
             <PostsList
-              postList={userposts}
-              loginStatus={true}
-              setuserPosts={setuserPosts}
+              postList={postList}
+              loginStatus={loginStatus}
+              setPostList={setPostList}
             ></PostsList>
-          ) : null}
-          {/* <NewPost />  */}
-        </div>
+            {userData.data ? (
+              <PostsList
+                postList={userposts}
+                loginStatus={true}
+                setuserPosts={setuserPosts}
+              ></PostsList>
+            ) : null}
+            {/* <NewPost />  */}
+          </Route>
+          <Route path="*">
+            <h1>404 Error - Page Not Found!</h1>
+          </Route>
+        </Switch>
       </div>
     </Router>
-
-    // <div className="app">
-    //   <Login></Login>
-
-    //   <PostsList
-    //     postList={postList}
-    //     loginStatus={loginStatus}
-    //     setPostList={setPostList}
-    //   ></PostsList>
-    //   {userData.data ? (
-    //     <PostsList
-    //       postList={userposts}
-    //       loginStatus={true}
-    //       setuserPosts={setuserPosts}
-    //     ></PostsList>
-    //   ) : null}
-    //   {/* <NewPost />  */}
-    // </div>
   );
 };
 
