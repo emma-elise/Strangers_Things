@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
 import PostsList from "./components/PostsList";
 import NewPost from "./components/NewPost";
@@ -33,24 +34,51 @@ const App = () => {
   }, []);
   console.log(userposts);
   return (
-    <div className="app">
-      <Login></Login>
+    <Router>
+      <div>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/users/register">Sign Up</Link>
+          <Link to="/users/login">Login</Link>
+          <Link to="/posts">Posts</Link>
+          <Link to="/posts/POST_ID/messages">Messages</Link>
+        </nav>
+        <div>
+          {/* for the main page, there will be another PostsList comp used for Users posts */}
+          <PostsList
+            postList={postList}
+            loginStatus={loginStatus}
+            setPostList={setPostList}
+          ></PostsList>
+          {userData.data ? (
+            <PostsList
+              postList={userposts}
+              loginStatus={true}
+              setuserPosts={setuserPosts}
+            ></PostsList>
+          ) : null}
+          {/* <NewPost />  */}
+        </div>
+      </div>
+    </Router>
 
-      {/* for the main page, there will be another PostsList comp used for Users posts */}
-      <PostsList
-        postList={postList}
-        loginStatus={loginStatus}
-        setPostList={setPostList}
-      ></PostsList>
-      {userData.data ? (
-        <PostsList
-          postList={userposts}
-          loginStatus={true}
-          setuserPosts={setuserPosts}
-        ></PostsList>
-      ) : null}
-      {/* <NewPost />  */}
-    </div>
+    // <div className="app">
+    //   <Login></Login>
+
+    //   <PostsList
+    //     postList={postList}
+    //     loginStatus={loginStatus}
+    //     setPostList={setPostList}
+    //   ></PostsList>
+    //   {userData.data ? (
+    //     <PostsList
+    //       postList={userposts}
+    //       loginStatus={true}
+    //       setuserPosts={setuserPosts}
+    //     ></PostsList>
+    //   ) : null}
+    //   {/* <NewPost />  */}
+    // </div>
   );
 };
 
