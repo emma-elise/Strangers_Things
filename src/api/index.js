@@ -25,7 +25,7 @@ async function fetchPosts() {
   }
 }
 
-async function fetchUserData() {
+async function fetchUserData(LoggedinToken) {
   const url = `${BASE_URL}/users/me`;
   const headers = {
     headers: {

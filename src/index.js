@@ -32,7 +32,7 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
-  console.log(userposts);
+
   return (
     <Router>
       <div>
@@ -53,23 +53,14 @@ const App = () => {
           <Route path="/posts"></Route>
           <Route path="posts/POST_ID/messages"></Route>
           <Route exact path="/">
-            {/* for the main page, there will be another PostsList comp used for Users posts */}
-            <PostsList
-              postList={postList}
-              loginStatus={loginStatus}
-              setPostList={setPostList}
-            ></PostsList>
-            {userData.data ? (
+            {/* for the main page, there will be another PostsList comp used for Users posts
               <PostsList
-                postList={userposts}
-                loginStatus={true}
-                setuserPosts={setuserPosts}
+                postList={postList}
+                loginStatus={loginStatus}
+                setPostList={setPostList}
               ></PostsList>
             ) : null}
-            {/* <NewPost />  */}
-          </Route>
-          <Route path="*">
-            <h1>404 Error - Page Not Found!</h1>
+              <NewPost setPostList={setPostList} userposts={userposts} postList={postList} setuserPosts={setuserPosts} /> */}
           </Route>
         </Switch>
       </div>
