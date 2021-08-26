@@ -8,6 +8,8 @@ const Post = (props) => {
     loginStatus,
     setuserPosts,
     postList,
+    setPostList,
+    mainPageList,
   } = props;
   return (
     <div>
@@ -16,7 +18,13 @@ const Post = (props) => {
       <div>{description}</div>
       <div>Price- {price}</div>
       {loginStatus ? (
-        <Delete postList={postList} setuserPosts={setuserPosts} id={_id} />
+        <Delete
+          postList={postList}
+          setuserPosts={setuserPosts}
+          id={_id}
+          setPostList={setPostList}
+          mainPageList={mainPageList}
+        />
       ) : null}
     </div>
   );

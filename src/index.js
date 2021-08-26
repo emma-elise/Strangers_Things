@@ -59,7 +59,15 @@ const App = () => {
               loginStatus={loginStatus}
               setPostList={setPostList}
             ></PostsList>
-            {/* ) : null} */}
+            {userData.data ? (
+            <PostsList
+              mainPageList = {postList}
+              postList={userposts}
+              loginStatus={true}
+              setuserPosts={setuserPosts}
+              setPostList={setPostList}
+            ></PostsList>
+          ) : null}
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -72,5 +80,9 @@ const App = () => {
     </Router>
   );
 };
+
+
+
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
