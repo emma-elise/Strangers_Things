@@ -5,11 +5,11 @@ import { BASE_URL } from "../api";
 
 // TODO: Work on displaying if user is logged on; add logout feature
 
-const Login = () => {
+const Login = (props) => {
+  const { userLoggedIn } = props;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  let userLoggedIn = false;
-  if (localStorage.getItem("token") !== null) userLoggedIn = true;
+  if (localStorage.getItem("token") !== null) !userLoggedIn;
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -24,7 +24,6 @@ const Login = () => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
-        userLoggedIn = true;
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -45,7 +44,6 @@ const Login = () => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
-        userLoggedIn = true;
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -53,10 +51,8 @@ const Login = () => {
   };
 
   const logoutUser = () => {
-    let userLoggedIn = false;
-    if (localStorage.getItem("token") !== null) userLoggedIn = true;
+    if (localStorage.getItem("token") !== null) !userLoggedIn;
     localStorage.removeItem("token");
-    userLoggedIn = false;
     console.log("logout clicked");
   };
 

@@ -9,8 +9,8 @@ import Login from "./components/login";
 const App = () => {
   const [postList, setPostList] = useState([]);
   const [userData, setUserData] = useState({});
-  const [LocalToken, setLocalToken] = useState([]);
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [localToken, setLocalToken] = useState([]);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userposts, setuserPosts] = useState([]);
 
   useEffect(() => {
@@ -56,18 +56,18 @@ const App = () => {
             {/* for the main page, there will be another PostsList comp used for Users posts */}
             <PostsList
               postList={postList}
-              loginStatus={loginStatus}
+              userLoggedIn={userLoggedIn}
               setPostList={setPostList}
             ></PostsList>
             {userData.data ? (
-            <PostsList
-              mainPageList = {postList}
-              postList={userposts}
-              loginStatus={true}
-              setuserPosts={setuserPosts}
-              setPostList={setPostList}
-            ></PostsList>
-          ) : null}
+              <PostsList
+                mainPageList={postList}
+                postList={userposts}
+                loginStatus={true}
+                setuserPosts={setuserPosts}
+                setPostList={setPostList}
+              ></PostsList>
+            ) : null}
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -80,9 +80,5 @@ const App = () => {
     </Router>
   );
 };
-
-
-
-
 
 ReactDOM.render(<App />, document.getElementById("root"));

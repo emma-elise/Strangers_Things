@@ -5,7 +5,7 @@ import PostsList from "./PostsList";
 const Post = (props) => {
   const {
     posts: { title, location, description, price, _id },
-    loginStatus,
+    userLoggedIn,
     setuserPosts,
     postList,
     setPostList,
@@ -17,7 +17,7 @@ const Post = (props) => {
       <div>Location- {location}</div>
       <div>{description}</div>
       <div>Price- {price}</div>
-      {loginStatus ? (
+      {userLoggedIn ? (
         <Delete
           postList={postList}
           setuserPosts={setuserPosts}
