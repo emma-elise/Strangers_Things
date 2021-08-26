@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
-import PostsList from "./components/PostsList";
-import NewPost from "./components/NewPost";
+import PostsList from "./components/Posts/PostsList";
+import NewPost from "./components/Posts/NewPost";
 import Login from "./components/login";
 
 const App = () => {

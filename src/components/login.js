@@ -6,15 +6,14 @@ import { BASE_URL } from "../api";
 // TODO: Work on displaying if user is logged on; add logout feature
 
 const Login = () => {
-  const [submitForm, setSubmitForm] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  let loginStatus = false;
+  let userLoggedIn = false;
+  if (localStorage.getItem("token") !== null) userLoggedIn = true;
 
   const registerUser = (event) => {
     event.preventDefault();
     console.log("form submitted");
-    setSubmitForm(true);
     const body = JSON.stringify({
       user: { username: username, password: password },
     });
@@ -25,7 +24,7 @@ const Login = () => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
-        loginStatus = !loginStatus;
+        userLoggedIn = true;
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -34,8 +33,8 @@ const Login = () => {
 
   const loginUser = (event) => {
     event.preventDefault();
+
     console.log("form submitted");
-    setSubmitForm(true);
     const body = JSON.stringify({
       user: { username: username, password: password },
     });
@@ -46,7 +45,7 @@ const Login = () => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
-        loginStatus = !loginStatus;
+        userLoggedIn = true;
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -54,18 +53,16 @@ const Login = () => {
   };
 
   const logoutUser = () => {
-    if (localStorage.getItem("token") === null) return;
+    let userLoggedIn = false;
+    if (localStorage.getItem("token") !== null) userLoggedIn = true;
     localStorage.removeItem("token");
-    loginStatus = !loginStatus;
-    location.reload();
+    userLoggedIn = false;
     console.log("logout clicked");
   };
 
   return (
     <section className="login">
-      {/* {!userLoggedIn && <h1>Login</h1>} */}
-      {/* {loginStatus && <h1>User Is Logged In</h1>} */}
-      {!loginStatus && localStorage.getItem("token") !== null && (
+      {userLoggedIn === true && localStorage.getItem("token") !== null && (
         <h1>User Is Logged In</h1>
       )}
       <h3>Register</h3>
@@ -113,7 +110,7 @@ const Login = () => {
       <h3>Logout</h3>
       <button type="submit" onClick={logoutUser}>
         Logout
-      </button>
+      </button>{" "}
     </section>
   );
 };
