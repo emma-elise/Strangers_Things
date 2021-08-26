@@ -53,14 +53,19 @@ const App = () => {
           <Route path="/posts"></Route>
           <Route path="posts/POST_ID/messages"></Route>
           <Route exact path="/">
-            {/* for the main page, there will be another PostsList comp used for Users posts
-              <PostsList
-                postList={postList}
-                loginStatus={loginStatus}
-                setPostList={setPostList}
-              ></PostsList>
-            ) : null}
-              <NewPost setPostList={setPostList} userposts={userposts} postList={postList} setuserPosts={setuserPosts} /> */}
+            {/* for the main page, there will be another PostsList comp used for Users posts */}
+            <PostsList
+              postList={postList}
+              loginStatus={loginStatus}
+              setPostList={setPostList}
+            ></PostsList>
+            {/* ) : null} */}
+            <NewPost
+              setPostList={setPostList}
+              userposts={userposts}
+              postList={postList}
+              setuserPosts={setuserPosts}
+            ></NewPost>
           </Route>
         </Switch>
       </div>

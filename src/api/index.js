@@ -1,3 +1,4 @@
+import axios from "axios";
 import Post from "../components/Post";
 
 const BASE_URL =
@@ -44,6 +45,7 @@ async function fetchUserData(LoggedinToken) {
 
 const fetchRegisterUser = async () => {
   const url = `${BASE_URL}/users/register`;
+  const method = "POST";
   const headers = {
     "Content-Type": "application/json",
   };
@@ -54,13 +56,22 @@ const fetchRegisterUser = async () => {
     },
   });
   try {
-    const registerUser = await (await fetch(url, headers, body)).json();
+    const registerUser = await (await fetch(url, method, headers, body)).json();
     console.log(registerUser);
     return registerUser;
   } catch (error) {
     throw error;
   }
 };
+
+// const fetchRegisterUser = () => {
+//   const data = "POST";
+//   const headers = {
+//     "Content-Type": "application/json",
+//   };
+//   const url = `${BASE_URL}/users/register`;
+//   return axios.post(url, headers);
+// };
 
 const fetchLoginUser = async () => {
   const url = `${BASE_URL}/users/login`;
