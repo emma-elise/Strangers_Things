@@ -52,12 +52,18 @@ const App = () => {
           ></PostsList>
           {userData.data ? (
             <PostsList
+              mainPageList = {postList}
               postList={userposts}
               loginStatus={true}
               setuserPosts={setuserPosts}
+              setPostList={setPostList}
             ></PostsList>
           ) : null}
-          <NewPost setPostList={setPostList} userposts={userposts} postList={postList} setuserPosts={setuserPosts} /> 
+          <NewPost 
+          setPostList={setPostList}
+           userposts={userposts}
+            postList={postList}
+             setuserPosts={setuserPosts} /> 
         </div>
       </div>
     </Router>

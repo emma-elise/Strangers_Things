@@ -3,7 +3,7 @@ import Delete from "./delete";
 import PostsList from "./PostsList";
 
 const Post = (props) => {
-  const { posts: {title, location, description, price, _id}, loginStatus, setuserPosts, postList } = props;
+  const { posts: {title, location, description, price, _id}, loginStatus, setuserPosts, postList, setPostList, mainPageList } = props;
   return (
     <div>
       <h3>{title}</h3>
@@ -15,6 +15,8 @@ const Post = (props) => {
           postList={postList}
           setuserPosts={setuserPosts}
           id={_id}
+          setPostList={setPostList}
+          mainPageList ={mainPageList}
         />
       ) : null}
     </div>

@@ -41,12 +41,9 @@ const NewPost = (props)=>{
             });
             
             const obj = await response.json();
-            console.log(obj)
             const post = obj.data.post;
-            console.log(postList,'hre')
             setuserPosts([post, ...userposts])
             setPostList([post, ...postList])
-            setPostList()
             setTitle('')
             setDescription('')
             setPrice('')
