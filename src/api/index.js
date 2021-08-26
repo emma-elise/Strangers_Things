@@ -1,3 +1,4 @@
+import axios from "axios";
 import Post from "../components/Post";
 
 const BASE_URL =
@@ -42,50 +43,4 @@ async function fetchUserData(LoggedinToken) {
   }
 }
 
-const fetchRegisterUser = async () => {
-  const url = `${BASE_URL}/users/register`;
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const body = JSON.stringify({
-    user: {
-      username: "",
-      password: "",
-    },
-  });
-  try {
-    const registerUser = await (await fetch(url, headers, body)).json();
-    console.log(registerUser);
-    return registerUser;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const fetchLoginUser = async () => {
-  const url = `${BASE_URL}/users/login`;
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const body = JSON.stringify({
-    user: {
-      username: "",
-      password: "",
-    },
-  });
-  try {
-    const loginUser = await (await fetch(url, headers, body)).json();
-    return loginUser;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export {
-  BASE_URL,
-  checkLogin,
-  fetchPosts,
-  fetchUserData,
-  fetchRegisterUser,
-  fetchLoginUser,
-};
+export { BASE_URL, checkLogin, fetchPosts, fetchUserData };

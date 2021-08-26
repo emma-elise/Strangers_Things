@@ -1,37 +1,119 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { Component, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { fetchRegisterUser, fetchLoginUser } from "../api";
+import { BASE_URL } from "../api";
 
-const Login = ({ setAuthenticated }) => {
+// TODO: Work on displaying if user is logged on; add logout feature
+
+const Login = () => {
   const [submitForm, setSubmitForm] = useState(false);
-  const userLoggedIn = false;
-  // form inputs
-  const authenticate = (event) => {
-    event.preventDefault;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  let loginStatus = false;
 
-    // Check that the user entered stuff into the inputs
-    // Validate data
-    // Make a ajax request to the backend
-    // Backend will return a response letting us know if the user was authenticated or not
+  const registerUser = (event) => {
+    event.preventDefault();
     console.log("form submitted");
     setSubmitForm(true);
+    const body = JSON.stringify({
+      user: { username: username, password: password },
+    });
+    const headers = { headers: { "Content-Type": "application/json" } };
+    return axios
+      .post(`${BASE_URL}/users/register`, body, headers)
+      .then((response) => {
+        console.log(response);
+        const token = response.data.data.token;
+        localStorage.setItem("token", token);
+        loginStatus = !loginStatus;
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   };
-  // if (submitForm) return <Redirect to="" />;
+
+  const loginUser = (event) => {
+    event.preventDefault();
+    console.log("form submitted");
+    setSubmitForm(true);
+    const body = JSON.stringify({
+      user: { username: username, password: password },
+    });
+    const headers = { headers: { "Content-Type": "application/json" } };
+    return axios
+      .post(`${BASE_URL}/users/login`, body, headers)
+      .then((response) => {
+        console.log(response);
+        const token = response.data.data.token;
+        localStorage.setItem("token", token);
+        loginStatus = !loginStatus;
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
+
+  const logoutUser = () => {
+    if (localStorage.getItem("token") === null) return;
+    localStorage.removeItem("token");
+    loginStatus = !loginStatus;
+    location.reload();
+    console.log("logout clicked");
+  };
+
   return (
     <section className="login">
-      {!userLoggedIn && <h1>Login</h1>}
-      <form onSubmit={authenticate}>
+      {/* {!userLoggedIn && <h1>Login</h1>} */}
+      {/* {loginStatus && <h1>User Is Logged In</h1>} */}
+      {!loginStatus && localStorage.getItem("token") !== null && (
+        <h1>User Is Logged In</h1>
+      )}
+      <h3>Register</h3>
+      <form onSubmit={registerUser}>
         <div>
           <label>Username: </label>
-          <input type="text" />
+          <input
+            type="text"
+            required="required"
+            value={username}
+            onInput={(event) => setUsername(event.target.value)}
+          />
         </div>
         <div>
           <label>Password: </label>
-          <input type="text" />
+          <input
+            type="text"
+            value={password}
+            onInput={(event) => setPassword(event.target.value)}
+          />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+      <h3>Login</h3>
+      <form onSubmit={loginUser}>
+        <div>
+          <label>Username: </label>
+          <input
+            type="text"
+            required="required"
+            value={username}
+            onInput={(event) => setUsername(event.target.value)}
+          />
+        </div>
+        <div>
+          <label>Password: </label>
+          <input
+            type="text"
+            value={password}
+            onInput={(event) => setPassword(event.target.value)}
+          />
         </div>
         <button type="submit">Login</button>
-        <button type="submit">Sign Up</button>
       </form>
+      <h3>Logout</h3>
+      <button type="submit" onClick={logoutUser}>
+        Logout
+      </button>
     </section>
   );
 };
