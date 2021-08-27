@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React,  { useState, useEffect, useRef } from 'react';
 
 
@@ -48,6 +47,3 @@ const Search = (props) => {
 }
 
 export default Search;
-=======
-import React from "react";
->>>>>>> a19cf7dab22464a353d50850002acb0645589cbc
