@@ -8,6 +8,32 @@ import Register from "./components/register";
 import Login from "./components/login";
 import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
+import styled from "styled-components";
+
+const Header = styled.header`
+  background-color: #211522;
+  color: white;
+  font-size: 1em;
+  height: 3rem;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  & > * + * {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    text-decoration: none;
+    font-family: "Akaya Kanadaka";
+    font-size: 1.5rem;
+  }
+
+  a:visited {
+    color: white;
+  }
+`;
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([]);
@@ -44,14 +70,15 @@ const App = () => {
   return (
     <Router>
       <div>
-        <nav>
+        <Header>
+          <h1>Stranger's Things</h1>
           <Link to="/">Home</Link>
           <Link to="/users/register">Sign Up</Link>
           <Link to="/users/login">Login</Link>
           <Link to="/posts">Posts</Link>
           <Link to="/posts/POST_ID/messages">Messages</Link>
           <Logout></Logout>
-        </nav>
+        </Header>
         <Switch>
           <Route path="/users/register">
             <Register

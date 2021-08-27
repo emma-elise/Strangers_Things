@@ -1,3 +1,7 @@
+* {
+  background-color: #613659;
+}
+
 .linkBtn {
   padding: 2px;
   border: 1px solid black;
@@ -16,3 +20,4 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
+/*# sourceMappingURL=style.css.map */
