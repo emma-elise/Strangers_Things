@@ -5,9 +5,18 @@ import BASE_URL from "../api";
 // TODO: onChange, onSubmit, etc. => identify how to keep username for <h1> after field is cleared
 
 const Login = (props) => {
-  const { userLoggedIn, username, setUsername, password, setPassword } = props;
-  // const [name, setName] = useState("");
-  if (localStorage.getItem("token") !== null) !userLoggedIn;
+  const {
+    userLoggedIn,
+    username,
+    setUsername,
+    password,
+    setPassword,
+    showUser,
+    setShowUser,
+    localUser,
+    setLocaluser,
+  } = props;
+  // if (localStorage.getItem("token") !== null) userLoggedIn;
 
   const loginUser = (event) => {
     event.preventDefault();
@@ -22,6 +31,7 @@ const Login = (props) => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("name", username);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -31,8 +41,9 @@ const Login = (props) => {
   return (
     <section className="login">
       {!userLoggedIn && localStorage.getItem("token") !== null && (
-        <h1>Hello, {username}</h1>
+        <h1>Hello, {localStorage.getItem("name")}</h1>
       )}
+      <h1>{showUser}</h1>
       <h3>Login</h3>
       <form onSubmit={loginUser}>
         <div>
@@ -49,7 +60,9 @@ const Login = (props) => {
           <input
             type="text"
             value={password}
-            onInput={(event) => setPassword(event.target.value)}
+            onInput={(event) => {
+              setPassword(event.target.value);
+            }}
           />
         </div>
         <button type="submit">Login</button>

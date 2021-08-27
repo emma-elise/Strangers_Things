@@ -4,7 +4,7 @@ import BASE_URL from "../api";
 
 const Register = (props) => {
   const { userLoggedIn, username, setUsername, password, setPassword } = props;
-  if (localStorage.getItem("token") !== null) !userLoggedIn;
+  // if (localStorage.getItem("token") !== null) userLoggedIn;
 
   const registerUser = (event) => {
     event.preventDefault();

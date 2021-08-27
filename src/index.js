@@ -10,11 +10,12 @@ import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
 
 const App = () => {
-  const [masterPostList, setMasterPostList] = useState([])
+  const [masterPostList, setMasterPostList] = useState([]);
   const [postList, setPostList] = useState([]);
   const [userData, setUserData] = useState({});
   const [localToken, setLocalToken] = useState([]);
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [localUser, setLocalUser] = useState([]);
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +50,7 @@ const App = () => {
           <Link to="/users/login">Login</Link>
           <Link to="/posts">Posts</Link>
           <Link to="/posts/POST_ID/messages">Messages</Link>
-          {!userLoggedIn && <Logout></Logout>}
+          <Logout></Logout>
         </nav>
         <Switch>
           <Route path="/users/register">
@@ -72,9 +73,7 @@ const App = () => {
           <Route path="posts/POST_ID/messages"></Route>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
-          <Search 
-          postList={ masterPostList }
-          setPostList ={setPostList}/>
+            <Search postList={masterPostList} setPostList={setPostList} />
             <PostsList
               postList={postList}
               userLoggedIn={userLoggedIn}
@@ -82,14 +81,14 @@ const App = () => {
             ></PostsList>
             {/* My posts page */}
             {userData.data ? (
-            <PostsList
-              mainPageList = {postList}
-              postList={userposts}
-              loginStatus={true}
-              setuserPosts={setuserPosts}
-              setPostList={setPostList}
-            ></PostsList>
-          ) : null}
+              <PostsList
+                mainPageList={postList}
+                postList={userposts}
+                loginStatus={true}
+                setuserPosts={setuserPosts}
+                setPostList={setPostList}
+              ></PostsList>
+            ) : null}
             <NewPost
               setPostList={setPostList}
               userposts={userposts}

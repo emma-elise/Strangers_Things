@@ -4,7 +4,7 @@ import PostsList from "./PostsList";
 
 const Post = (props) => {
   const {
-    posts: { title, location, description, price, _id },
+    posts: { title, location, description, price, _id, author, username },
     userLoggedIn,
     setuserPosts,
     postList,
@@ -14,9 +14,11 @@ const Post = (props) => {
   return (
     <div>
       <h3>{title}</h3>
-      <div>Location- {location}</div>
+      <div>Location: {location}</div>
       <div>{description}</div>
-      <div>Price- {price}</div>
+      <div>Price: {price}</div>
+      <div>Post ID: {_id}</div>
+      <div>Author: {author.username} </div>
       {userLoggedIn ? (
         <Delete
           postList={postList}

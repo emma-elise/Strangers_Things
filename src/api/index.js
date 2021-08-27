@@ -20,6 +20,7 @@ async function fetchPosts() {
     const response = await fetch(url);
     const obj = await response.json();
     const posts = obj.data.posts;
+    console.log(posts);
     return posts;
   } catch (error) {
     throw error;
@@ -37,6 +38,7 @@ async function fetchUserData(LoggedinToken) {
   try {
     const response = await fetch(url, headers);
     const obj = await response.json();
+    console.log(obj);
     return obj;
   } catch (error) {
     throw error;

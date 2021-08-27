@@ -1,17 +1,21 @@
 const Logout = (props) => {
-  const { userLoggedIn } = props;
+  const { userLoggedIn, setUserLoggedIn } = props;
+
   const logoutUser = () => {
     if (localStorage.getItem("token") === null) return;
-    if (localStorage.getItem("token") !== null) !userLoggedIn;
     localStorage.removeItem("token");
+    localStorage.removeItem("name");
+
     console.log("logout clicked");
   };
 
   return (
     <section className="login">
-      <button type="submit" onClick={logoutUser}>
-        Logout
-      </button>
+      {!userLoggedIn && (
+        <button type="submit" onClick={logoutUser}>
+          Logout
+        </button>
+      )}
     </section>
   );
 };
