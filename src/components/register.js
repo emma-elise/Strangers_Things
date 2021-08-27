@@ -1,15 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import BASE_URL from "../api";
 
-// TODO: onChange, onSubmit, etc. => identify how to keep username for <h1> after field is cleared
-
-const Login = (props) => {
+const Register = (props) => {
   const { userLoggedIn, username, setUsername, password, setPassword } = props;
-  // const [name, setName] = useState("");
   if (localStorage.getItem("token") !== null) !userLoggedIn;
 
-  const loginUser = (event) => {
+  const registerUser = (event) => {
     event.preventDefault();
     console.log("form submitted");
     const body = JSON.stringify({
@@ -17,7 +14,7 @@ const Login = (props) => {
     });
     const headers = { headers: { "Content-Type": "application/json" } };
     return axios
-      .post(`${BASE_URL}/users/login`, body, headers)
+      .post(`${BASE_URL}/users/register`, body, headers)
       .then((response) => {
         console.log(response);
         const token = response.data.data.token;
@@ -31,10 +28,10 @@ const Login = (props) => {
   return (
     <section className="login">
       {!userLoggedIn && localStorage.getItem("token") !== null && (
-        <h1>Hello, {username}</h1>
+        <h1>User Is Logged In</h1>
       )}
-      <h3>Login</h3>
-      <form onSubmit={loginUser}>
+      <h3>Register</h3>
+      <form onSubmit={registerUser}>
         <div>
           <label>Username: </label>
           <input
@@ -52,10 +49,10 @@ const Login = (props) => {
             onInput={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </section>
   );
 };
 
-export default Login;
+export default Register;
