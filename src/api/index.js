@@ -1,5 +1,5 @@
 import axios from "axios";
-import Post from "../components/Posts/Post";
+import Post from "../components/Post";
 
 const BASE_URL =
   "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT";
@@ -43,4 +43,5 @@ async function fetchUserData(LoggedinToken) {
   }
 }
 
-export { BASE_URL, checkLogin, fetchPosts, fetchUserData };
+export default BASE_URL;
+export { checkLogin, fetchPosts, fetchUserData };

@@ -1,5 +1,5 @@
 import React from "react";
-import Delete from "../Delete/delete";
+import Delete from "./delete";
 import PostsList from "./PostsList";
 
 const Post = (props) => {

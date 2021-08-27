@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
-import PostsList from "./components/Posts/PostsList";
-import NewPost from "./components/Posts/NewPost";
+import PostsList from "./components/PostsList";
+import NewPost from "./components/NewPost";
+import Register from "./components/register";
 import Login from "./components/login";
 import Search from "./components/To-Sort/Search";
-
+import Logout from "./components/logout";
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([])
@@ -15,6 +16,8 @@ const App = () => {
   const [localToken, setLocalToken] = useState([]);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userposts, setuserPosts] = useState([]);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     fetchPosts()
@@ -46,13 +49,24 @@ const App = () => {
           <Link to="/users/login">Login</Link>
           <Link to="/posts">Posts</Link>
           <Link to="/posts/POST_ID/messages">Messages</Link>
+          {!userLoggedIn && <Logout></Logout>}
         </nav>
         <Switch>
           <Route path="/users/register">
-            <Login />
+            <Register
+              username={username}
+              password={password}
+              setUsername={setUsername}
+              setPassword={setPassword}
+            ></Register>
           </Route>
           <Route path="/users/login">
-            <Login />
+            <Login
+              username={username}
+              password={password}
+              setUsername={setUsername}
+              setPassword={setPassword}
+            ></Login>
           </Route>
           <Route path="/posts"></Route>
           <Route path="posts/POST_ID/messages"></Route>
