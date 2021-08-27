@@ -5,8 +5,11 @@ import { fetchPosts, fetchUserData } from "./api";
 import PostsList from "./components/PostsList";
 import NewPost from "./components/NewPost";
 import Login from "./components/login";
+import Search from "./components/Search";
+
 
 const App = () => {
+  const [masterPostList, setMasterPostList] = useState([])
   const [postList, setPostList] = useState([]);
   const [userData, setUserData] = useState({});
   const [LocalToken, setLocalToken] = useState([]);
@@ -16,6 +19,7 @@ const App = () => {
   useEffect(() => {
     fetchPosts()
       .then((val) => {
+        setMasterPostList(val);
         setPostList(val);
       })
       .catch((error) => console.error(error));
@@ -54,11 +58,15 @@ const App = () => {
           <Route path="posts/POST_ID/messages"></Route>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
+          <Search 
+          postList={ masterPostList }
+          setPostList ={setPostList}/>
             <PostsList
               postList={postList}
               loginStatus={loginStatus}
               setPostList={setPostList}
             ></PostsList>
+            {/* My posts page */}
             {userData.data ? (
             <PostsList
               mainPageList = {postList}
@@ -68,6 +76,7 @@ const App = () => {
               setPostList={setPostList}
             ></PostsList>
           ) : null}
+
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
