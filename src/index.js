@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
-import PostsList from "./components/PostsList";
-import NewPost from "./components/NewPost";
+import PostsList from "./components/Posts/PostsList";
+import NewPost from "./components/Posts/NewPost";
 import Login from "./components/login";
-import Search from "./components/Search";
+import Search from "./components/To-Sort/Search";
 
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([])
   const [postList, setPostList] = useState([]);
   const [userData, setUserData] = useState({});
-  const [LocalToken, setLocalToken] = useState([]);
-  const [loginStatus, setLoginStatus] = useState(false);
+  const [localToken, setLocalToken] = useState([]);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userposts, setuserPosts] = useState([]);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const App = () => {
           setPostList ={setPostList}/>
             <PostsList
               postList={postList}
-              loginStatus={loginStatus}
+              userLoggedIn={userLoggedIn}
               setPostList={setPostList}
             ></PostsList>
             {/* My posts page */}
@@ -76,7 +76,6 @@ const App = () => {
               setPostList={setPostList}
             ></PostsList>
           ) : null}
-
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -89,9 +88,5 @@ const App = () => {
     </Router>
   );
 };
-
-
-
-
 
 ReactDOM.render(<App />, document.getElementById("root"));
