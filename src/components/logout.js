@@ -1,3 +1,5 @@
+// TODO: Route back to home page when logout button pushed; fix how userLoggedIn is... broken
+
 const Logout = (props) => {
   const { userLoggedIn, setUserLoggedIn } = props;
 

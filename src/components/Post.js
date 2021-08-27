@@ -1,6 +1,11 @@
 import React from "react";
 import Delete from "./delete";
 import PostsList from "./PostsList";
+import styled from "styled-components";
+
+const PostContainer = styled.div`
+  background-color: #c197d2;
+`;
 
 const Post = (props) => {
   const {
@@ -12,7 +17,7 @@ const Post = (props) => {
     mainPageList,
   } = props;
   return (
-    <div>
+    <PostContainer>
       <h3>{title}</h3>
       <div>Location: {location}</div>
       <div>{description}</div>
@@ -28,7 +33,7 @@ const Post = (props) => {
           mainPageList={mainPageList}
         />
       ) : null}
-    </div>
+    </PostContainer>
   );
 };
 

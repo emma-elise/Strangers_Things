@@ -10,29 +10,72 @@ import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
 import styled from "styled-components";
 
+const Container = styled.div`
+  background-color: #613659;
+  height: 100vh;
+`;
+
 const Header = styled.header`
   background-color: #211522;
   color: white;
   font-size: 1em;
-  height: 3rem;
+  height: 92px;
   border-radius: 3px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-
-  & > * + * {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    text-decoration: none;
-    font-family: "Akaya Kanadaka";
-    font-size: 1.5rem;
-  }
+  font-family: "Akaya Kanadaka";
 
   a:visited {
     color: white;
   }
+
+  a:hover {
+    color: #c197d2;
+  }
+`;
+
+const HeaderTopLayer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: white;
+
+  & > * + * {
+  }
+`;
+
+const HeaderTopLayerLeft = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const HeaderTopLayerRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const HeaderBottomLayer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const LeftDrawer = styled.div`
+  grid-row: 2;
+  grid-column: 1;
+  transition: width 0.5s ease, background 0.5s ease;
+  width: 64px;
+  background-color: #613659;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+`;
+
+const Body = styled.div`
+  grid-row: 2;
+  grid-column: 2;
 `;
 
 const App = () => {
@@ -69,38 +112,31 @@ const App = () => {
 
   return (
     <Router>
-      <div>
+      <Container>
         <Header>
-          <h1>Stranger's Things</h1>
-          <Link to="/">Home</Link>
-          <Link to="/users/register">Sign Up</Link>
-          <Link to="/users/login">Login</Link>
-          <Link to="/posts">Posts</Link>
-          <Link to="/posts/POST_ID/messages">Messages</Link>
-          <Logout></Logout>
+          <HeaderTopLayer>
+            <HeaderTopLayerLeft>
+              <Link to="/">Home</Link>
+              {userLoggedIn && <Link to="/posts">Posts</Link>}
+              {userLoggedIn && (
+                <Link to="/posts/POST_ID/messages">Messages</Link>
+              )}
+            </HeaderTopLayerLeft>
+            <HeaderTopLayerRight>
+              {userLoggedIn && <Link to="/users/register">Sign Up</Link>}
+              {userLoggedIn && <Link to="/users/login">Login</Link>}
+              {userLoggedIn && <Logout></Logout>}
+            </HeaderTopLayerRight>
+          </HeaderTopLayer>
+          <HeaderBottomLayer>
+            <h1>Stranger's Things</h1>
+            <Search postList={masterPostList} setPostList={setPostList} />
+          </HeaderBottomLayer>
         </Header>
-        <Switch>
-          <Route path="/users/register">
-            <Register
-              username={username}
-              password={password}
-              setUsername={setUsername}
-              setPassword={setPassword}
-            ></Register>
-          </Route>
-          <Route path="/users/login">
-            <Login
-              username={username}
-              password={password}
-              setUsername={setUsername}
-              setPassword={setPassword}
-            ></Login>
-          </Route>
-          <Route path="/posts"></Route>
-          <Route path="posts/POST_ID/messages"></Route>
+        <LeftDrawer></LeftDrawer>
+        <Body>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
-            <Search postList={masterPostList} setPostList={setPostList} />
             <PostsList
               postList={postList}
               userLoggedIn={userLoggedIn}
@@ -123,8 +159,28 @@ const App = () => {
               setuserPosts={setuserPosts}
             ></NewPost>
           </Route>
-        </Switch>
-      </div>
+        </Body>
+      </Container>
+      <Switch>
+        <Route path="/users/register">
+          <Register
+            username={username}
+            password={password}
+            setUsername={setUsername}
+            setPassword={setPassword}
+          ></Register>
+        </Route>
+        <Route path="/users/login">
+          <Login
+            username={username}
+            password={password}
+            setUsername={setUsername}
+            setPassword={setPassword}
+          ></Login>
+        </Route>
+        <Route path="/posts"></Route>
+        <Route path="posts/POST_ID/messages"></Route>
+      </Switch>
     </Router>
   );
 };
