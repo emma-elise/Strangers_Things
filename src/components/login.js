@@ -10,21 +10,17 @@ import { Link } from "react-router-dom";
 
 const Login = (props) => {
   const {
-    userLoggedIn,
-    setUserLoggedIn,
     username,
     setUsername,
     password,
     setPassword,
     showUser,
     setShowUser,
-    localUser,
-    setLocaluser,
   } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
 
   const loginUser = (event, history) => {
-    event.preventDefault();
+    // event.preventDefault();
     console.log("form submitted");
     const body = JSON.stringify({
       user: { username: username, password: password },
@@ -48,7 +44,7 @@ const Login = (props) => {
 
   return (
     <section className="login">
-      {!userLoggedIn && localStorage.getItem("token") !== null && (
+      {localStorage.getItem("token") !== null && (
         <h1>Hello, {localStorage.getItem("name")}</h1>
       )}
       <h1>{showUser}</h1>
@@ -60,7 +56,6 @@ const Login = (props) => {
             type="text"
             required="required"
             value={username}
-            onClick={setUserLoggedIn}
             onInput={(event) => setUsername(event.target.value)}
           />
         </div>
@@ -74,7 +69,16 @@ const Login = (props) => {
             }}
           />
         </div>
-        <button type="submit">Login</button>
+        <Link
+          to="/"
+          className="btn btn-primary"
+          onClick={() => {
+            loginUser();
+            window.location.href = "/";
+          }}
+        >
+          Login
+        </Link>
       </form>
     </section>
   );

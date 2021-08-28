@@ -1,20 +1,14 @@
 import axios from "axios";
 import React from "react";
 import BASE_URL from "../api";
+import { Link } from "react-router-dom";
 
 const Register = (props) => {
-  const {
-    userLoggedIn,
-    setUserLoggedIn,
-    username,
-    setUsername,
-    password,
-    setPassword,
-  } = props;
+  const { username, setUsername, password, setPassword } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
 
-  const registerUser = (event) => {
-    event.preventDefault();
+  const registerUser = () => {
+    // event.preventDefault();
     console.log("form submitted");
     const body = JSON.stringify({
       user: { username: username, password: password },
@@ -34,9 +28,7 @@ const Register = (props) => {
 
   return (
     <section className="login">
-      {!userLoggedIn && localStorage.getItem("token") !== null && (
-        <h1>User Is Logged In</h1>
-      )}
+      {localStorage.getItem("token") !== null && <h1>User Is Logged In</h1>}
       <h3>Register</h3>
       <form onSubmit={registerUser}>
         <div>
@@ -45,7 +37,6 @@ const Register = (props) => {
             type="text"
             required="required"
             value={username}
-            onClick={setUserLoggedIn}
             onInput={(event) => setUsername(event.target.value)}
           />
         </div>
@@ -57,7 +48,16 @@ const Register = (props) => {
             onInput={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <Link
+          to="/"
+          className="btn btn-primary"
+          onClick={() => {
+            registerUser();
+            window.location.href = "/";
+          }}
+        >
+          Register
+        </Link>
       </form>
     </section>
   );

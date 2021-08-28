@@ -96,6 +96,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
+
   useEffect(() => {
     fetchPosts()
       .then((val) => {
@@ -118,14 +119,6 @@ const App = () => {
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
 
-  const useToggle = (initialState = false) => {
-    const [state, setState] = useState(initialState);
-    const toggle = useCallback(() => setState((state) => !state), []);
-    return [state, toggle];
-  };
-
-  const [userLoggedIn, setUserLoggedIn] = useToggle();
-
   // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
 
   return (
@@ -135,15 +128,21 @@ const App = () => {
           <HeaderTopLayer>
             <HeaderTopLayerLeft>
               <Link to="/">Home</Link>
-              {!userLoggedIn && <Link to="/posts">Posts</Link>}
-              {!userLoggedIn && (
+              {localStorage.getItem("token") !== null && (
+                <Link to="/posts">Posts</Link>
+              )}
+              {localStorage.getItem("token") !== null && (
                 <Link to="/posts/POST_ID/messages">Messages</Link>
               )}
             </HeaderTopLayerLeft>
             <HeaderTopLayerRight>
-              {userLoggedIn && <Link to="/users/register">Sign Up</Link>}
-              {userLoggedIn && <Link to="/users/login">Login</Link>}
-              {!userLoggedIn && <Logout></Logout>}
+              {localStorage.getItem("token") === null && (
+                <Link to="/users/register">Sign Up</Link>
+              )}
+              {localStorage.getItem("token") === null && (
+                <Link to="/users/login">Login</Link>
+              )}
+              {localStorage.getItem("token") !== null && <Logout></Logout>}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
           <HeaderBottomLayer>
@@ -205,6 +204,7 @@ const App = () => {
           {userData ? <MessagesList userData={userData} /> : null}
         </Route>
         <Route exact path="/">
+          <Logout></Logout>
           {/* <Home /> */}
         </Route>
         <Route path="*">

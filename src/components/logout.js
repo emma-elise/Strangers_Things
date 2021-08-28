@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom";
+
 // TODO: Route back to home page when logout button pushed; fix how userLoggedIn is... broken
 
 const Logout = (props) => {
-  const { userLoggedIn, setUserLoggedIn } = props;
-
   const logoutUser = () => {
     if (localStorage.getItem("token") === null) return;
     localStorage.removeItem("token");
@@ -12,11 +12,21 @@ const Logout = (props) => {
 
   return (
     <section className="login">
-      {!userLoggedIn && (
-        <button type="submit" onClick={logoutUser}>
-          Logout
-        </button>
-      )}
+      {
+        <Link
+          to="/"
+          className="btn btn-primary"
+          onClick={() => {
+            logoutUser();
+            window.location.href = "/";
+          }}
+        >
+          Log Out
+        </Link>
+        // <button type="submit" onClick={logoutUser}>
+        //   Logout
+        // </button>
+      }
     </section>
   );
 };
