@@ -9,6 +9,7 @@ import Login from "./components/login";
 import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
 import styled from "styled-components";
+import MessagesList from "./components/Messages/MessagesList";
 
 const Container = styled.div`
   background-color: #613659;
@@ -88,7 +89,7 @@ const App = () => {
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [userId, setUserId]= useState("")
   useEffect(() => {
     fetchPosts()
       .then((val) => {
@@ -101,6 +102,7 @@ const App = () => {
       .then((val) => {
         setUserData(val);
         setuserPosts(val.data.posts.filter((post) => post.active));
+        setUserId(val.data._id)
       })
       .catch((error) => console.error(error));
 
@@ -139,19 +141,13 @@ const App = () => {
             {/* for the main page, there will be another PostsList comp used for Users posts */}
             <PostsList
               postList={postList}
-              userLoggedIn={userLoggedIn}
               setPostList={setPostList}
+              userLoggedIn={true}
+              userId ={userId}
             ></PostsList>
+           
             {/* My posts page */}
-            {userData.data ? (
-              <PostsList
-                mainPageList={postList}
-                postList={userposts}
-                loginStatus={true}
-                setuserPosts={setuserPosts}
-                setPostList={setPostList}
-              ></PostsList>
-            ) : null}
+            
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -178,8 +174,21 @@ const App = () => {
             setPassword={setPassword}
           ></Login>
         </Route>
-        <Route path="/posts"></Route>
-        <Route path="posts/POST_ID/messages"></Route>
+        <Route exact path="/posts">
+              {userData.data ? (
+              <PostsList
+                mainPageList={postList}
+                postList={userposts}
+                userLoggedIn={true}
+                setuserPosts={setuserPosts}
+                setPostList={setPostList}
+              ></PostsList>
+              ) : null}
+              
+        </Route>
+        <Route path="posts/POST_ID/messages">
+          { userData ? <MessagesList userData={userData}/>: null}
+        </Route>
       </Switch>
     </Router>
   );

@@ -31,7 +31,6 @@ const Search = (props) => {
     const newPostList = postList.filter((post) => {
       return post.title.toLowerCase().includes(searchTerm.toLowerCase());
     });
-    console.log(newPostList);
     setPostList(newPostList);
   };
 

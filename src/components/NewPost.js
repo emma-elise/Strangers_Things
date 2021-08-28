@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 const NewPost = (props) => {
-  const { loginToken, setuserPosts, setPostList, postList, userposts } = props;
-  const [submitForm, setSubmitForm] = useState(false);
+  const { setuserPosts, setPostList, postList, userposts } = props;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
   const [willDeliver, setWillDeliver] = useState("");
-  const userLoggedIn = false;
+  const token = localStorage.getItem("token")
+
   const validationHandler = () => {
     if (title.length > 0 && description.length > 0 && price.length > 0) {
       return true;
@@ -18,7 +18,6 @@ const NewPost = (props) => {
   const postHandler = async (event) => {
     event.preventDefault();
     if (validationHandler()) {
-      console.log("form submitted");
       try {
         const response = await fetch(
           "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
@@ -26,7 +25,7 @@ const NewPost = (props) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIxMDg1ZDZjYzIzNDAwMTcxN2ExYzAiLCJ1c2VybmFtZSI6InN1cGVybWFuc0JvZHlnYXVyZHMiLCJpYXQiOjE2Mjk1NTQ3ODF9.TGH8VtdQ1VrdlW1HMjhKpBqJr2BL_y9oPkLrAitqP2o`,
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               post: {
@@ -53,7 +52,7 @@ const NewPost = (props) => {
         throw error;
       }
     } else {
-      alert("please fill out forms");
+      alert("Please Fill Out Form");
     }
     // Check that the user entered stuff into the inputs
     // Validate data
@@ -64,7 +63,7 @@ const NewPost = (props) => {
   };
   return (
     <section className="NewPost">
-      {!userLoggedIn && <h1>NewPost</h1>}
+      {<h1>NewPost</h1>}
       <form onSubmit={postHandler}>
         <div>
           <label>Title </label>

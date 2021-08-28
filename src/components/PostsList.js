@@ -1,16 +1,18 @@
 import React from "react";
 import Post from "./Post";
-
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 const PostsList = ({
   postList,
   userLoggedIn,
   setuserPosts,
   setPostList,
   mainPageList,
+  userId
 }) => {
   return (
     <div>
-      {userLoggedIn ? <h1> MY POSTS </h1> : <h1> POSTS </h1>}
+      <Route exact path='/'><h1> POSTS </h1></Route>
+      <Route path='/posts'><h1> MY POSTS </h1></Route>
       {postList.map((post) => {
         return (
           <Post
@@ -21,6 +23,7 @@ const PostsList = ({
             posts={post}
             setPostList={setPostList}
             mainPageList={mainPageList}
+            userId={userId}
           />
         );
       })}
