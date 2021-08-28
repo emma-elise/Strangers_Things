@@ -4,8 +4,7 @@ import Post from "../components/Post";
 const BASE_URL =
   "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT";
 
-const loginToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTIxMDg1ZDZjYzIzNDAwMTcxN2ExYzAiLCJ1c2VybmFtZSI6InN1cGVybWFuc0JvZHlnYXVyZHMiLCJpYXQiOjE2Mjk1NTQ3ODF9.TGH8VtdQ1VrdlW1HMjhKpBqJr2BL_y9oPkLrAitqP2o";
+const loginToken =localStorage.getItem("token");
 
 async function checkLogin() {
   if (localStorage.getItem("loginToken")) {
