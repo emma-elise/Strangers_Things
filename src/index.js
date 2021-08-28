@@ -48,12 +48,20 @@ const HeaderTopLayerLeft = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  & > * + * {
+    margin-left: 1rem;
+  }
 `;
 
 const HeaderTopLayerRight = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  & > * + * {
+    margin-right: 1rem;
+  }
 `;
 
 const HeaderBottomLayer = styled.div`
@@ -73,10 +81,7 @@ const LeftDrawer = styled.div`
   cursor: pointer;
 `;
 
-const Body = styled.div`
-  grid-row: 2;
-  grid-column: 2;
-`;
+const Body = styled.div``;
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([]);
@@ -84,7 +89,7 @@ const App = () => {
   const [userData, setUserData] = useState({});
   const [localToken, setLocalToken] = useState([]);
   const [localUser, setLocalUser] = useState([]);
-  const [userLoggedIn, setUserLoggedIn] = useState(true);
+  const [userLoggedIn, setUserLoggedIn] = useState();
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -109,6 +114,8 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
+
+  // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
 
   return (
     <Router>
@@ -180,6 +187,12 @@ const App = () => {
         </Route>
         <Route path="/posts"></Route>
         <Route path="posts/POST_ID/messages"></Route>
+        <Route exact path="/">
+          {/* <Home /> */}
+        </Route>
+        <Route path="*">
+          <h1>404 Error - Page Not Found!</h1>
+        </Route>
       </Switch>
     </Router>
   );

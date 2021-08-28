@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import BASE_URL from "../api";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+
+// import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 // TODO: onChange, onSubmit, etc. => identify how to keep username for <h1> after field is cleared
 
@@ -18,13 +22,15 @@ const Login = (props) => {
   } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
 
-  const loginUser = (event) => {
+  const loginUser = (event, history) => {
     event.preventDefault();
     console.log("form submitted");
     const body = JSON.stringify({
       user: { username: username, password: password },
     });
     const headers = { headers: { "Content-Type": "application/json" } };
+    // history.pushState("/");
+    // <Link to="/" />;
     return axios
       .post(`${BASE_URL}/users/login`, body, headers)
       .then((response) => {
@@ -32,6 +38,7 @@ const Login = (props) => {
         const token = response.data.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("name", username);
+        // this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -58,7 +65,7 @@ const Login = (props) => {
         <div>
           <label>Password: </label>
           <input
-            type="text"
+            type="password"
             value={password}
             onInput={(event) => {
               setPassword(event.target.value);
@@ -71,4 +78,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

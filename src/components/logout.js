@@ -7,7 +7,6 @@ const Logout = (props) => {
     if (localStorage.getItem("token") === null) return;
     localStorage.removeItem("token");
     localStorage.removeItem("name");
-
     console.log("logout clicked");
   };
 
