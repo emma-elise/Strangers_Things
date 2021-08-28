@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
@@ -13,7 +13,9 @@ import MessagesList from "./components/Messages/MessagesList";
 
 const Container = styled.div`
   background-color: #613659;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
+  overflow: auto;
 `;
 
 const Header = styled.header`
@@ -90,11 +92,10 @@ const App = () => {
   const [userData, setUserData] = useState({});
   const [localToken, setLocalToken] = useState([]);
   const [localUser, setLocalUser] = useState([]);
-  const [userLoggedIn, setUserLoggedIn] = useState();
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userId, setUserId]= useState("")
+  const [userId, setUserId] = useState("");
   useEffect(() => {
     fetchPosts()
       .then((val) => {
@@ -107,7 +108,7 @@ const App = () => {
       .then((val) => {
         setUserData(val);
         setuserPosts(val.data.posts.filter((post) => post.active));
-        setUserId(val.data._id)
+        setUserId(val.data._id);
       })
       .catch((error) => console.error(error));
 
@@ -116,6 +117,14 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
+
+  const useToggle = (initialState = false) => {
+    const [state, setState] = useState(initialState);
+    const toggle = useCallback(() => setState((state) => !state), []);
+    return [state, toggle];
+  };
+
+  const [userLoggedIn, setUserLoggedIn] = useToggle();
 
   // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
 
@@ -126,15 +135,15 @@ const App = () => {
           <HeaderTopLayer>
             <HeaderTopLayerLeft>
               <Link to="/">Home</Link>
-              {userLoggedIn && <Link to="/posts">Posts</Link>}
-              {userLoggedIn && (
+              {!userLoggedIn && <Link to="/posts">Posts</Link>}
+              {!userLoggedIn && (
                 <Link to="/posts/POST_ID/messages">Messages</Link>
               )}
             </HeaderTopLayerLeft>
             <HeaderTopLayerRight>
               {userLoggedIn && <Link to="/users/register">Sign Up</Link>}
               {userLoggedIn && <Link to="/users/login">Login</Link>}
-              {userLoggedIn && <Logout></Logout>}
+              {!userLoggedIn && <Logout></Logout>}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
           <HeaderBottomLayer>
@@ -150,11 +159,11 @@ const App = () => {
               postList={postList}
               setPostList={setPostList}
               userLoggedIn={true}
-              userId ={userId}
+              userId={userId}
             ></PostsList>
-           
+
             {/* My posts page */}
-            
+
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -181,18 +190,19 @@ const App = () => {
             setPassword={setPassword}
           ></Login>
         </Route>
-        <Route path="/posts">  
-            {userData.data ? (
-              <PostsList
-                mainPageList={postList}
-                postList={userposts}
-                userLoggedIn={true}
-                setuserPosts={setuserPosts}
-                setPostList={setPostList}
-              ></PostsList>
-              ) : null}</Route>
+        <Route path="/posts">
+          {userData.data ? (
+            <PostsList
+              mainPageList={postList}
+              postList={userposts}
+              userLoggedIn={true}
+              setuserPosts={setuserPosts}
+              setPostList={setPostList}
+            ></PostsList>
+          ) : null}
+        </Route>
         <Route path="posts/POST_ID/messages">
-            { userData ? <MessagesList userData={userData}/>: null}
+          {userData ? <MessagesList userData={userData} /> : null}
         </Route>
         <Route exact path="/">
           {/* <Home /> */}
@@ -206,5 +216,3 @@ const App = () => {
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));
- 
-              
