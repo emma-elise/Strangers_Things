@@ -3,7 +3,14 @@ import React from "react";
 import BASE_URL from "../api";
 
 const Register = (props) => {
-  const { userLoggedIn, username, setUsername, password, setPassword } = props;
+  const {
+    userLoggedIn,
+    setUserLoggedIn,
+    username,
+    setUsername,
+    password,
+    setPassword,
+  } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
 
   const registerUser = (event) => {
@@ -38,6 +45,7 @@ const Register = (props) => {
             type="text"
             required="required"
             value={username}
+            onClick={setUserLoggedIn}
             onInput={(event) => setUsername(event.target.value)}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
@@ -13,7 +13,9 @@ import MessagesList from "./components/Messages/MessagesList";
 
 const Container = styled.div`
   background-color: #613659;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
+  overflow: auto;
 `;
 
 const Header = styled.header`
@@ -94,7 +96,7 @@ const App = () => {
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [userId, setUserId]= useState("")
+  const [userId, setUserId] = useState("");
   useEffect(() => {
     fetchPosts()
       .then((val) => {
@@ -107,11 +109,27 @@ const App = () => {
     }
     console.log(userData, 'here')
     // fetching user just for testing right now
+    fetchUserData()
+      .then((val) => {
+        setUserData(val);
+        setuserPosts(val.data.posts.filter((post) => post.active));
+        setUserId(val.data._id);
+      })
+      .catch((error) => console.error(error));
+
     //fetch posts to setPostList https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts
     //fetch messages to setMessageList? https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/users/me
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
+
+  const useToggle = (initialState = false) => {
+    const [state, setState] = useState(initialState);
+    const toggle = useCallback(() => setState((state) => !state), []);
+    return [state, toggle];
+  };
+
+  const [userLoggedIn, setUserLoggedIn] = useToggle();
 
   // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
 
@@ -122,8 +140,8 @@ const App = () => {
           <HeaderTopLayer>
             <HeaderTopLayerLeft>
               <Link to="/">Home</Link>
-              {userLoggedIn && <Link to="/posts">Posts</Link>}
-              {userLoggedIn && (
+              {!userLoggedIn && <Link to="/posts">Posts</Link>}
+              {!userLoggedIn && (
                 <Link to="/posts/POST_ID/messages">Messages</Link>
               )}
             </HeaderTopLayerLeft>
@@ -148,9 +166,9 @@ const App = () => {
               userLoggedIn={userLoggedIn}
               userId ={userId}
             ></PostsList>
-           
+
             {/* My posts page */}
-            
+
             <NewPost
               setPostList={setPostList}
               userposts={userposts}
@@ -206,5 +224,3 @@ const App = () => {
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));
- 
-              

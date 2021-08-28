@@ -12,6 +12,7 @@ import { fetchPosts, fetchUserData } from "../api";
 const Login = (props) => {
   const {
     userLoggedIn,
+    setUserLoggedIn,
     username,
     setUsername,
     password,
@@ -79,6 +80,7 @@ const Login = (props) => {
             type="text"
             required="required"
             value={username}
+            onClick={setUserLoggedIn}
             onInput={(event) => setUsername(event.target.value)}
           />
         </div>
