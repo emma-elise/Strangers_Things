@@ -90,7 +90,7 @@ const App = () => {
   const [userData, setUserData] = useState({});
   const [localToken, setLocalToken] = useState([]);
   const [localUser, setLocalUser] = useState([]);
-  const [userLoggedIn, setUserLoggedIn] = useState();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userposts, setuserPosts] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -102,15 +102,11 @@ const App = () => {
         setPostList(val);
       })
       .catch((error) => console.error(error));
+    if (localStorage.getItem("token")){
+      setUserLoggedIn(true)
+    }
+    console.log(userData, 'here')
     // fetching user just for testing right now
-    fetchUserData()
-      .then((val) => {
-        setUserData(val);
-        setuserPosts(val.data.posts.filter((post) => post.active));
-        setUserId(val.data._id)
-      })
-      .catch((error) => console.error(error));
-
     //fetch posts to setPostList https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts
     //fetch messages to setMessageList? https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/users/me
     //
@@ -132,9 +128,9 @@ const App = () => {
               )}
             </HeaderTopLayerLeft>
             <HeaderTopLayerRight>
-              {userLoggedIn && <Link to="/users/register">Sign Up</Link>}
-              {userLoggedIn && <Link to="/users/login">Login</Link>}
-              {userLoggedIn && <Logout></Logout>}
+              {!userLoggedIn && <Link to="/users/register">Sign Up</Link>}
+              {!userLoggedIn && <Link to="/users/login">Login</Link>}
+              {userLoggedIn && <Logout setUserLoggedIn={setUserLoggedIn}></Logout>}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
           <HeaderBottomLayer>
@@ -149,7 +145,7 @@ const App = () => {
             <PostsList
               postList={postList}
               setPostList={setPostList}
-              userLoggedIn={true}
+              userLoggedIn={userLoggedIn}
               userId ={userId}
             ></PostsList>
            
@@ -163,7 +159,6 @@ const App = () => {
             ></NewPost>
           </Route>
         </Body>
-      </Container>
       <Switch>
         <Route path="/users/register">
           <Register
@@ -175,13 +170,17 @@ const App = () => {
         </Route>
         <Route path="/users/login">
           <Login
+            setUserLoggedIn={setUserLoggedIn}
+            setUserId={setUserId}
+            setuserPosts={setuserPosts}
+            setUserData={setUserData}
             username={username}
             password={password}
             setUsername={setUsername}
             setPassword={setPassword}
           ></Login>
         </Route>
-        <Route path="/posts">  
+        <Route exact path="/posts">  
             {userData.data ? (
               <PostsList
                 mainPageList={postList}
@@ -191,7 +190,7 @@ const App = () => {
                 setPostList={setPostList}
               ></PostsList>
               ) : null}</Route>
-        <Route path="posts/POST_ID/messages">
+        <Route path="/messages">
             { userData ? <MessagesList userData={userData}/>: null}
         </Route>
         <Route exact path="/">
@@ -201,6 +200,7 @@ const App = () => {
           <h1>404 Error - Page Not Found!</h1>
         </Route>
       </Switch>
+      </Container>
     </Router>
   );
 };

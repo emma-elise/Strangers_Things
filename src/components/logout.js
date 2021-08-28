@@ -8,6 +8,7 @@ const Logout = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     console.log("logout clicked");
+    setUserLoggedIn(false)
   };
 
   return (
