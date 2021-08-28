@@ -44,7 +44,7 @@ const Register = (props) => {
         <div>
           <label>Password: </label>
           <input
-            type="text"
+            type="password"
             value={password}
             onInput={(event) => setPassword(event.target.value)}
           />
