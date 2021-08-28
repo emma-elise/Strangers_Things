@@ -106,30 +106,35 @@ const App = () => {
       .catch((error) => console.error(error));
     if (localStorage.getItem("token")){
       setUserLoggedIn(true)
+      fetchUserData()
+                .then((val) => {
+                setUserData(val);
+                setuserPosts(val.data.posts.filter((post) => post.active));
+                setUserId(val.data._id)
+                })
+              .catch((error) => console.error(error));
     }
-    console.log(userData, 'here')
+    
     // fetching user just for testing right now
-    fetchUserData()
-      .then((val) => {
-        setUserData(val);
-        setuserPosts(val.data.posts.filter((post) => post.active));
-        setUserId(val.data._id);
-      })
-      .catch((error) => console.error(error));
-
     //fetch posts to setPostList https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts
     //fetch messages to setMessageList? https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/users/me
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
 
-  const useToggle = (initialState = false) => {
-    const [state, setState] = useState(initialState);
-    const toggle = useCallback(() => setState((state) => !state), []);
-    return [state, toggle];
-  };
 
-  const [userLoggedIn, setUserLoggedIn] = useToggle();
+  useEffect(
+    ()=> {console.log(userLoggedIn, userData, 'here')
+  },[userLoggedIn]
+  )
+
+  // const useToggle = (initialState = false) => {
+  //   const [state, setState] = useState(initialState);
+  //   const toggle = useCallback(() => setState((state) => !state), []);
+  //   return [state, toggle];
+  // };
+
+  // const [userLoggedIn, setUserLoggedIn] = useToggle();
 
   // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
 
@@ -140,15 +145,15 @@ const App = () => {
           <HeaderTopLayer>
             <HeaderTopLayerLeft>
               <Link to="/">Home</Link>
-              {!userLoggedIn && <Link to="/posts">Posts</Link>}
-              {!userLoggedIn && (
-                <Link to="/posts/POST_ID/messages">Messages</Link>
+              {userLoggedIn && <Link to="/posts">Posts</Link>}
+              {userLoggedIn && (
+                <Link to="/messages">Messages</Link>
               )}
             </HeaderTopLayerLeft>
             <HeaderTopLayerRight>
               {!userLoggedIn && <Link to="/users/register">Sign Up</Link>}
               {!userLoggedIn && <Link to="/users/login">Login</Link>}
-              {userLoggedIn && <Logout setUserLoggedIn={setUserLoggedIn}></Logout>}
+              {userLoggedIn && <Logout  setUserLoggedIn={setUserLoggedIn}></Logout>}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
           <HeaderBottomLayer>
@@ -199,17 +204,17 @@ const App = () => {
           ></Login>
         </Route>
         <Route exact path="/posts">  
-            {userData.data ? (
               <PostsList
                 mainPageList={postList}
                 postList={userposts}
-                userLoggedIn={true}
+                userLoggedIn={userLoggedIn}
                 setuserPosts={setuserPosts}
                 setPostList={setPostList}
               ></PostsList>
-              ) : null}</Route>
+              </Route>
         <Route path="/messages">
-            { userData ? <MessagesList userData={userData}/>: null}
+          <div>{ userData ? <MessagesList userData={userData}/>: null}</div>
+            
         </Route>
         <Route exact path="/">
           {/* <Home /> */}

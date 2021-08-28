@@ -24,7 +24,6 @@ const Login = (props) => {
     setUserData,
     setUserId,
     setuserPosts,
-    setUserLoggedIn
   } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
   const [formSubmitted, setformsubmitted] = useState(false)
