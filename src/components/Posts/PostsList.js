@@ -32,7 +32,7 @@ const PostsMyContainer = styled.div`
   text-align: center;
   font-size: 18px;
   border-radius: 6px 6px 0 0;
-`;
+`; 
 
 const PostsList = ({
   postList,
@@ -45,16 +45,8 @@ const PostsList = ({
 }) => {
   return (
     <div>
-      <Route exact path="/">
-        {/* <PostsAllContainer>
-          <h3> Posts - All </h3>
-        </PostsAllContainer> */}
-      </Route>
-      <Route path="/posts">
-        {/* <PostsMyContainer>
-          <h1> MY POSTS </h1>
-        </PostsMyContainer> */}
-      </Route>
+      <Route exact path="/"></Route>
+      <Route path="/posts"></Route>
       <PostContainerList>
         {postList.map((post) => {
           return (

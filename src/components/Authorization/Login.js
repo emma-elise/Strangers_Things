@@ -1,16 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import BASE_URL from "../api";
-import { withRouter } from "react-router";
+import BASE_URL from "../../api";
 import { Link } from "react-router-dom";
-import { fetchPosts, fetchUserData } from "../api";
+import { fetchUserData } from "../../api";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import styled from "styled-components";
-import Button from '@material-ui/core/Button';
-
-// import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const Modal = styled.div`
   position: absolute;
@@ -40,8 +37,6 @@ const Heading = styled.div`
   align-items: center;
   justify-content: flex-start;
   font-size: 24px;
-  /* margin-bottom: 6px; */
-  /* padding-bottom: 6px; */
   border-bottom: 1px solid #888;
 `;
 
@@ -94,11 +89,11 @@ const Login = (props) => {
     setPassword,
     showUser,
     setUserData,
+    userId,
     setUserId,
     setuserPosts,
-    setUserLoggedIn
+    setUserLoggedIn,
   } = props;
-  // if (localStorage.getItem("token") !== null) userLoggedIn;
   const [formSubmitted, setformsubmitted] = useState(false);
   const loginUser = (event, history) => {
     event.preventDefault();
@@ -108,8 +103,7 @@ const Login = (props) => {
       user: { username: username, password: password },
     });
     const headers = { headers: { "Content-Type": "application/json" } };
-    // history.pushState("/");
-    // <Link to="/" />;
+
     axios
       .post(`${BASE_URL}/users/login`, body, headers)
       .then((response) => {
@@ -118,7 +112,6 @@ const Login = (props) => {
         localStorage.setItem("token", token);
         localStorage.setItem("name", username);
         setformsubmitted(true);
-        // this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -127,7 +120,7 @@ const Login = (props) => {
   useEffect(() => {
     if (formSubmitted) {
       setUserLoggedIn(true);
-      fetchUserData(localStorage.getItem('token'))
+      fetchUserData(localStorage.getItem("token"))
         .then((val) => {
           setUserData(val);
           setuserPosts(val.data.posts.filter((post) => post.active));
@@ -182,7 +175,6 @@ const Login = (props) => {
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                    
                         window.location.href = "/";
                       }}
                     >
@@ -207,23 +199,19 @@ const Login = (props) => {
                   <FooterButton>
                     <LockOpenRoundedIcon
                       style={{ color: "white", fontSize: 30 }}
-                    >
-                      {/* <span class="action text">Log In</span> */}
-                    </LockOpenRoundedIcon>
-                    {/* <Link
-                      to="/"
-                      style={{ textDecoration: "none" }}
-                      className="btn btn-primary"
-                      onClick={() => {
-                        loginUser();
-                        // window.location.href = "/";
+                    ></LockOpenRoundedIcon>
+                    <Button
+                      variant="contained"
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
                       }}
+                      className="btn btn-primary"
+                      type="submit"
                     >
-                      Login
-                    </Link> */}
-                    <Button variant="contained" style={{ textDecoration: "none", backgroundColor: 'black', color: "white" }} className="btn btn-primary" type="submit">
-                    Submit
-                  </Button>
+                      Submit
+                    </Button>
                   </FooterButton>
                 </Footer>
               </form>

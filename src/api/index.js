@@ -1,10 +1,5 @@
-import axios from "axios";
-import Post from "../components/Post";
-
 const BASE_URL =
   "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT";
-
-
 
 async function checkLogin() {
   if (localStorage.getItem("loginToken")) {
@@ -19,6 +14,7 @@ async function fetchPosts() {
     const response = await fetch(url);
     const obj = await response.json();
     const posts = obj.data.posts;
+    console.log(posts);
     return posts;
   } catch (error) {
     throw error;

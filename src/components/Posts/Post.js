@@ -1,15 +1,14 @@
 import React from "react";
-import Delete from "./delete";
+import Delete from "./DeletePost";
 import styled from "styled-components";
-import NewMessage from "./NewMessage";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import NewMessage from "../Messages/NewMessage";
+import { BrowserRouter as Route } from "react-router-dom";
 
 const PostContainer = styled.div`
   background-color: #c197d2;
   border: 1px solid #211522;
   background: #fafafa;
   box-shadow: 0 3px 8px -3px black;
-  /* border-radius: 20%; */
   border-radius: 5%;
   margin: 0.5rem;
 `;
@@ -18,20 +17,19 @@ const PostTitle = styled.div`
   padding: 8px;
   background: #c197d2;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 6px 6px 0 0;
   font-family: "ABeeZee", sans-serif;
+  height: 48px;
 `;
 
 const PostContent = styled.div`
   padding: 8px;
-  /* border-radius: 6px 6px 0 0; */
 `;
 
 const PostMessage = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
   background: #c197d2;
   padding: 8px;
   border-radius: 0 0 6px 6px;
@@ -39,18 +37,29 @@ const PostMessage = styled.div`
 
 const Post = (props) => {
   const {
-    posts: { title, location, description, price, _id, author },
+    posts: { title, location, description, price, _id, author, author_id },
     userLoggedIn,
+    userPosts,
     setuserPosts,
     postList,
     setPostList,
     mainPageList,
     userId,
   } = props;
+
   return (
     <PostContainer>
       <PostTitle>
         <h3>{title}</h3>
+        {author.username === localStorage.getItem("name") && (
+          <Delete
+            postList={postList}
+            setuserPosts={setuserPosts}
+            id={_id}
+            setPostList={setPostList}
+            mainPageList={mainPageList}
+          />
+        )}
       </PostTitle>
       <PostContent>
         <div>
@@ -63,7 +72,7 @@ const Post = (props) => {
           <strong>Price:</strong> {price}
         </div>
         <div>
-          <strong>From:</strong> {author.username}{" "}
+          <strong>From:</strong> {author.username}
         </div>
       </PostContent>
       <PostMessage>
@@ -73,15 +82,7 @@ const Post = (props) => {
           </Route>
         ) : null}
       </PostMessage>
-      <Route path="/posts">
-        <Delete
-          postList={postList}
-          setuserPosts={setuserPosts}
-          id={_id}
-          setPostList={setPostList}
-          mainPageList={mainPageList}
-        />
-      </Route>
+      <Route path="/posts"></Route>
     </PostContainer>
   );
 };
