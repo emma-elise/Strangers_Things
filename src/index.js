@@ -228,13 +228,17 @@ const App = () => {
         </Header>
         <LeftDrawer>
           <Button>
-            <HomeRoundedIcon style={{ color: "white", fontSize: 30 }}>
-              <Link to="/">Home</Link>
-            </HomeRoundedIcon>
+            <Link to="/">
+              <HomeRoundedIcon style={{ color: "white", fontSize: 30 }} />
+            </Link>
           </Button>
           {userLoggedIn && (
             <Button>
-              <AddCircleRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              <Link to="/posts/new">
+                <AddCircleRoundedIcon
+                  style={{ color: "white", fontSize: 30 }}
+                />
+              </Link>
             </Button>
           )}
           {userLoggedIn && (
@@ -308,7 +312,15 @@ const App = () => {
               setPassword={setPassword}
             ></Login>
           </Route>
-          <Route exact path="/posts">
+          <Route path="/posts/new">
+            <NewPost>
+              setPostList={setPostList}
+              userposts={userposts}
+              postList={postList}
+              setuserPosts={setuserPosts}
+            </NewPost>
+          </Route>
+          <Route path="/posts">
             <PostsList
               mainPageList={postList}
               postList={userposts}
