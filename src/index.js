@@ -10,81 +10,157 @@ import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
 import styled from "styled-components";
 import MessagesList from "./components/Messages/MessagesList";
+import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
+import LibraryBooksRoundedIcon from "@material-ui/icons/LibraryBooksRounded";
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
+import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
+import LockRoundedIcon from "@material-ui/icons/LockRounded";
 
 const Container = styled.div`
-  background-color: #613659;
-  /* height: 100vh; */
-  height: 100%;
-  overflow: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100vh;
+  max-height: 100%;
+  position: relative;
 `;
 
 const Header = styled.header`
-  background-color: #211522;
-  color: white;
-  font-size: 1em;
-  height: 92px;
-  border-radius: 3px;
-  font-family: "Akaya Kanadaka";
-
+  grid-row: 1;
+  grid-column: 1 / 3;
+  font-family: "Akaya Telivigala", cursive;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 48px;
+  text-align: center;
+  padding: 0.25em 0;
+  background: #211522;
+  color: #fafafa;
+  /* 
   a:visited {
     color: white;
   }
 
   a:hover {
     color: #c197d2;
-  }
+  } */
+`;
+
+const SearchBar = styled.div`
+  font-family: "ABeeZee", sans-serif;
+  font-size: 18px;
+  padding: 0.5em;
+  background: #211522;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px 6px 6px 6px;
+  height: 2.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const HeaderTopLayer = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: space-between;
   text-decoration: none;
   font-size: 1.5rem;
-  color: white;
+  color: white; */
 
   & > * + * {
+    /* margin-left: 1rem; */
   }
 `;
 
 const HeaderTopLayerLeft = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; */
 
   & > * + * {
-    margin-left: 1rem;
+    /* margin: 1rem; */
   }
 `;
 
 const HeaderTopLayerRight = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: center; */
 
   & > * + * {
-    margin-right: 1rem;
+    /* margin: 1rem; */
   }
 `;
 
 const HeaderBottomLayer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
 `;
 
 const LeftDrawer = styled.div`
   grid-row: 2;
   grid-column: 1;
+  display: flex;
+  background: #613659;
+  ${(props) => {
+    if (props.toggle) {
+    }
+  }}
   transition: width 0.5s ease, background 0.5s ease;
   width: 64px;
-  background-color: #613659;
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
+
+  :hover {
+    width: 80px;
+    background: #d3b1c2;
+  }
 `;
 
-const Body = styled.div``;
+const LeftDrawerOpen = styled.div`
+  width: 300px;
+  border-radius: unset;
+  transition: width 0.5s ease, background 0.5s ease;
+`;
+
+const Button = styled.div`
+  padding: 0.75rem;
+  background: #1b1b1b;
+  color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-family: "ABeeZee", sans-serif;
+  border-radius: 6px;
+  margin: 8px;
+`;
+
+const ButtonStretched = styled.div`
+  width: 284px;
+`;
+
+const Icon = styled.div``;
+
+const Body = styled.div`
+  grid-row: 2;
+  grid-column: 2;
+  /* grid-column: 2 / 3; */
+  background: #c197d2;
+  font-size: 16px;
+  padding: 8px;
+  display: grid;
+  grid-gap: 8px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+`;
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([]);
@@ -97,6 +173,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
+
   useEffect(() => {
     fetchPosts()
       .then((val) => {
@@ -104,17 +181,17 @@ const App = () => {
         setPostList(val);
       })
       .catch((error) => console.error(error));
-    if (localStorage.getItem("token")){
-      setUserLoggedIn(true)
-      fetchUserData()
-                .then((val) => {
-                setUserData(val);
-                setuserPosts(val.data.posts.filter((post) => post.active));
-                setUserId(val.data._id)
-                })
-              .catch((error) => console.error(error));
+    if (localStorage.getItem("token")) {
+      setUserLoggedIn(true);
+      fetchUserData(localStorage.getItem("token"))
+        .then((val) => {
+          setUserData(val);
+          setuserPosts(val.data.posts.filter((post) => post.active));
+          setUserId(val.data._id);
+        })
+        .catch((error) => console.error(error));
     }
-    
+
     // fetching user just for testing right now
     //fetch posts to setPostList https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts
     //fetch messages to setMessageList? https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/users/me
@@ -122,107 +199,161 @@ const App = () => {
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
 
-
-  useEffect(
-    ()=> {console.log(userLoggedIn, userData, 'here')
-  },[userLoggedIn]
-  )
-
-  // const useToggle = (initialState = false) => {
-  //   const [state, setState] = useState(initialState);
-  //   const toggle = useCallback(() => setState((state) => !state), []);
-  //   return [state, toggle];
-  // };
-
-  // const [userLoggedIn, setUserLoggedIn] = useToggle();
-
-  // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
-
   return (
     <Router>
       <Container>
         <Header>
-          <HeaderTopLayer>
+          {/* <HeaderTopLayer>
             <HeaderTopLayerLeft>
-              <Link to="/">Home</Link>
-              {userLoggedIn && <Link to="/posts">Posts</Link>}
-              {userLoggedIn && (
-                <Link to="/messages">Messages</Link>
+              {/* {localStorage.getItem("token") !== null && (
+                <Link to="/posts">Posts</Link>
               )}
-            </HeaderTopLayerLeft>
-            <HeaderTopLayerRight>
+              {localStorage.getItem("token") !== null && (
+                <Link to="/posts/POST_ID/messages">Messages</Link>
+              )} */}
+          {/* {userLoggedIn && <Link to="/posts">Posts</Link>}
+              {userLoggedIn && <Link to="/messages">Messages</Link>}
+            </HeaderTopLayerLeft> */}
+          {/* <HeaderTopLayerRight>
+              {localStorage.getItem("token") === null && (
+                <Link to="/users/register">Sign Up</Link>
+              )}
+              {localStorage.getItem("token") === null && (
+                <Link to="/users/login">Login</Link>
+              )}
+              {localStorage.getItem("token") !== null && <Logout></Logout>}
+            </HeaderTopLayerRight> */}
+          {/* <HeaderTopLayerRight>
               {!userLoggedIn && <Link to="/users/register">Sign Up</Link>}
               {!userLoggedIn && <Link to="/users/login">Login</Link>}
-              {userLoggedIn && <Logout  setUserLoggedIn={setUserLoggedIn}></Logout>}
+              {userLoggedIn && (
+                <Logout setUserLoggedIn={setUserLoggedIn}></Logout>
+              )}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
-          <HeaderBottomLayer>
-            <h1>Stranger's Things</h1>
-            <Search postList={masterPostList} setPostList={setPostList} />
-          </HeaderBottomLayer>
+          <HeaderBottomLayer> */}
+          Stranger's Things
+          {/* <Search postList={masterPostList} setPostList={setPostList} />
+          </HeaderBottomLayer> */}
         </Header>
-        <LeftDrawer></LeftDrawer>
+        <LeftDrawer>
+          <Button>
+            <Link to="/">
+              <HomeRoundedIcon style={{ color: "white", fontSize: 30 }} />
+            </Link>
+          </Button>
+          {userLoggedIn && (
+            <Button>
+              <Link to="/posts/new">
+                <AddCircleRoundedIcon
+                  style={{ color: "white", fontSize: 30 }}
+                />
+              </Link>
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <Link to="/posts">
+                <LibraryBooksRoundedIcon
+                  style={{ color: "white", fontSize: 30 }}
+                />
+              </Link>
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <Link to="/messages">
+                <ChatRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              </Link>
+            </Button>
+          )}
+          {!userLoggedIn && (
+            <Button>
+              <Link to="/users/login">
+                <LockOpenRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              </Link>
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <LockRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              <Logout setUserLoggedIn={setUserLoggedIn}></Logout>
+            </Button>
+          )}
+        </LeftDrawer>
         <Body>
+          <SearchBar>
+            <Search postList={masterPostList} setPostList={setPostList} />
+          </SearchBar>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
             <PostsList
               postList={postList}
               setPostList={setPostList}
-              userLoggedIn={userLoggedIn}
-              userId ={userId}
+              userLoggedIn={userLoggedIn} 
+              userId={userId}
             ></PostsList>
 
             {/* My posts page */}
 
-            <NewPost
+            {/* <NewPost
+              setPostList={setPostList}
+              userposts={userposts}
+              postList={postList}
+              setuserPosts={setuserPosts}
+            ></NewPost> */}
+          </Route>
+        </Body>
+        <Switch>
+          <Route path="/users/register">
+            <Register
+              username={username}
+              password={password}
+              setUsername={setUsername}
+              setPassword={setPassword}
+            ></Register>
+          </Route>
+          <Route path="/users/login">
+            <Login
+              setUserLoggedIn={setUserLoggedIn}
+              setUserId={setUserId}
+              setuserPosts={setuserPosts}
+              setUserData={setUserData}
+              username={username}
+              password={password}
+              setUsername={setUsername}
+              setPassword={setPassword}
+            ></Login>
+          </Route>
+          <Route path="/posts/new">
+
+           <NewPost
               setPostList={setPostList}
               userposts={userposts}
               postList={postList}
               setuserPosts={setuserPosts}
             ></NewPost>
+
           </Route>
-        </Body>
-      <Switch>
-        <Route path="/users/register">
-          <Register
-            username={username}
-            password={password}
-            setUsername={setUsername}
-            setPassword={setPassword}
-          ></Register>
-        </Route>
-        <Route path="/users/login">
-          <Login
-            setUserLoggedIn={setUserLoggedIn}
-            setUserId={setUserId}
-            setuserPosts={setuserPosts}
-            setUserData={setUserData}
-            username={username}
-            password={password}
-            setUsername={setUsername}
-            setPassword={setPassword}
-          ></Login>
-        </Route>
-        <Route exact path="/posts">  
-              <PostsList
-                mainPageList={postList}
-                postList={userposts}
-                userLoggedIn={userLoggedIn}
-                setuserPosts={setuserPosts}
-                setPostList={setPostList}
-              ></PostsList>
-              </Route>
-        <Route path="/messages">
-          { userData ? <MessagesList userData={userData}/>: null}
-            
-        </Route>
-        <Route exact path="/">
-          {/* <Home /> */}
-        </Route>
-        <Route path="*">
-          <h1>404 Error - Page Not Found!</h1>
-        </Route>
-      </Switch>
+          <Route path="/posts">
+            <PostsList
+              mainPageList={postList}
+              postList={userposts}
+              userLoggedIn={userLoggedIn}
+              setuserPosts={setuserPosts}
+              setPostList={setPostList}
+            ></PostsList>
+          </Route>
+          <Route path="/messages">
+            <div>{userData ? <MessagesList userData={userData} /> : null}</div>
+          </Route>
+          <Route exact path="/">
+            {/* <Home /> */}
+          </Route>
+          <Route path="*">
+            <h1>404 Error - Page Not Found!</h1>
+          </Route>
+        </Switch>
       </Container>
     </Router>
   );
