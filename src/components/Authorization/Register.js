@@ -168,11 +168,19 @@ const Register = (props) => {
                 <Footer>
                   <FooterButton>
                     <CloseRoundedIcon
-                      style={{ color: "white", fontSize: 30 }}
-                    ></CloseRoundedIcon>
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
+                      }}
+                        ></CloseRoundedIcon>
                     <Link
                       to="/"
-                      style={{ textDecoration: "none" }}
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
+                      }}
                       className="btn btn-primary"
                       onClick={() => {
                         window.location.href = "/";
@@ -186,12 +194,13 @@ const Register = (props) => {
                       style={{ color: "white", fontSize: 30 }}
                     ></CreateRoundedIcon>
                     <Link
-                      to="/"
-                      style={{ textDecoration: "none" }}
-                      className="btn btn-primary"
-                      onClick={() => {
-                        window.location.href = "/users/login";
+                      to="/users/login"
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
                       }}
+                      className="btn btn-primary"
                     >
                       Login
                     </Link>
