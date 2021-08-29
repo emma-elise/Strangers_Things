@@ -262,9 +262,8 @@ const App = () => {
           )}
           {userLoggedIn && (
             <Button>
-              <Logout setUserLoggedIn={setUserLoggedIn}>
-                <LockRoundedIcon style={{ color: "white", fontSize: 30 }} />
-              </Logout>
+              <LockRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              <Logout setUserLoggedIn={setUserLoggedIn}></Logout>
             </Button>
           )}
         </LeftDrawer>

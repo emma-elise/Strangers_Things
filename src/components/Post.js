@@ -32,7 +32,7 @@ const PostMessage = styled.div`
   justify-content: flex-end;
   background: #c197d2;
   padding: 8px;
-  border-radius: 0 0 6px 6px;
+  /* border-radius: 0 0 6px 6px; */
 `;
 
 const Post = (props) => {
