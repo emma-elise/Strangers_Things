@@ -41,6 +41,7 @@ const PostsList = ({
   setPostList,
   mainPageList,
   userId,
+  userposts
 }) => {
   return (
     <div>
@@ -66,6 +67,7 @@ const PostsList = ({
               setPostList={setPostList}
               mainPageList={mainPageList}
               userId={userId}
+              userposts={userposts}
             />
           );
         })}

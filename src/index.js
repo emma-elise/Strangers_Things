@@ -342,6 +342,7 @@ const App = () => {
               userLoggedIn={userLoggedIn}
               setuserPosts={setuserPosts}
               setPostList={setPostList}
+              userposts={userposts}
             ></PostsList>
           </Route>
           <Route path="/messages">

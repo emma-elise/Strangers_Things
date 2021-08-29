@@ -149,7 +149,7 @@ const Register = (props) => {
             <h3>Register</h3>
           </Heading>
           <Form>
-            <div class="modal">
+            <div className="modal">
               <form onSubmit={registerUser}>
                 <div>
                   <Label>Username</Label>
