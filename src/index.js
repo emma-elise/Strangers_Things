@@ -47,6 +47,20 @@ const Header = styled.header`
   } */
 `;
 
+const SearchBar = styled.div`
+  font-family: "ABeeZee", sans-serif;
+  font-size: 18px;
+  padding: 0.5em;
+  background: #211522;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px 6px 6px 6px;
+  height: 2.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
 const HeaderTopLayer = styled.div`
   /* display: flex;
   flex-direction: row;
@@ -144,8 +158,8 @@ const Body = styled.div`
   display: grid;
   grid-gap: 8px;
   height: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const App = () => {
@@ -272,6 +286,9 @@ const App = () => {
           )}
         </LeftDrawer>
         <Body>
+          <SearchBar>
+            <Search postList={masterPostList} setPostList={setPostList} />
+          </SearchBar>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
             <PostsList

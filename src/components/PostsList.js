@@ -45,9 +45,9 @@ const PostsList = ({
   return (
     <div>
       <Route exact path="/">
-        <PostsAllContainer>
+        {/* <PostsAllContainer>
           <h3> Posts - All </h3>
-        </PostsAllContainer>
+        </PostsAllContainer> */}
       </Route>
       <Route path="/posts">
         {/* <PostsMyContainer>

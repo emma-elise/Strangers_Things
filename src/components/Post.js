@@ -9,7 +9,8 @@ const PostContainer = styled.div`
   border: 1px solid #211522;
   background: #fafafa;
   box-shadow: 0 3px 8px -3px black;
-  border-radius: 20%;
+  /* border-radius: 20%; */
+  border-radius: 5%;
   margin: 0.5rem;
 `;
 
@@ -24,6 +25,7 @@ const PostTitle = styled.div`
 
 const PostContent = styled.div`
   padding: 8px;
+  /* border-radius: 6px 6px 0 0; */
 `;
 
 const PostMessage = styled.div`
@@ -32,7 +34,7 @@ const PostMessage = styled.div`
   justify-content: flex-end;
   background: #c197d2;
   padding: 8px;
-  /* border-radius: 0 0 6px 6px; */
+  border-radius: 0 0 6px 6px;
 `;
 
 const Post = (props) => {
