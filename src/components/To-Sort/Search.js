@@ -6,9 +6,17 @@ import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 // import { FontAwesomeIcon } from "@fontwesome/react-fontawesome";
 
 const SearchBar = styled.section`
+  font-family: "ABeeZee", sans-serif;
+  font-size: 18px;
+  padding: 0.5em;
+  background: #211522;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px 6px 6px 6px;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
+  display: flex;
   height: 3rem;
   font-size: 1.5rem;
 `;

@@ -48,7 +48,7 @@ const Header = styled.header`
 `;
 
 const SearchBar = styled.div`
-  font-family: "ABeeZee", sans-serif;
+  /* font-family: "ABeeZee", sans-serif;
   font-size: 18px;
   padding: 0.5em;
   background: #211522;
@@ -58,7 +58,7 @@ const SearchBar = styled.div`
   height: 2.5rem;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; */
 `;
 
 const HeaderTopLayer = styled.div`
