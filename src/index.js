@@ -61,12 +61,6 @@ const LeftDrawer = styled.div`
   }
 `;
 
-const LeftDrawerOpen = styled.div`
-  width: 300px;
-  border-radius: unset;
-  transition: width 0.5s ease, background 0.5s ease;
-`;
-
 const Button = styled.div`
   padding: 0.75rem;
   background: #1b1b1b;
@@ -80,12 +74,6 @@ const Button = styled.div`
   border-radius: 6px;
   margin: 8px;
 `;
-
-const ButtonStretched = styled.div`
-  width: 284px;
-`;
-
-const Icon = styled.div``;
 
 const Body = styled.div`
   grid-row: 2;
@@ -109,7 +97,6 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
-  const [messageSent, setMessageSent] = useState(false);
 
   useEffect(() => {
     fetchPosts()
