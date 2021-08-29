@@ -7,6 +7,7 @@ import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import styled from "styled-components";
+import Button from "@material-ui/core/Button";
 
 const Modal = styled.div`
   position: absolute;
@@ -36,8 +37,6 @@ const Heading = styled.div`
   align-items: center;
   justify-content: flex-start;
   font-size: 24px;
-  /* margin-bottom: 6px; */
-  /* padding-bottom: 6px; */
   border-bottom: 1px solid #888;
 `;
 
@@ -89,21 +88,22 @@ const Register = (props) => {
     password,
     setPassword,
     showUser,
-    setShowUser,
-    localUser,
-    setLocaluser,
     setUserData,
+    userId,
     setUserId,
     setuserPosts,
+    setUserLoggedIn,
   } = props;
   const [formSubmitted, setformsubmitted] = useState(false);
   const registerUser = (event, history) => {
+    event.preventDefault();
     console.log("form submitted");
 
     const body = JSON.stringify({
       user: { username: username, password: password },
     });
     const headers = { headers: { "Content-Type": "application/json" } };
+
     axios
       .post(`${BASE_URL}/users/register`, body, headers)
       .then((response) => {
@@ -120,7 +120,7 @@ const Register = (props) => {
   useEffect(() => {
     if (formSubmitted) {
       setUserLoggedIn(true);
-      fetchUserData()
+      fetchUserData(localStorage.getItem("token"))
         .then((val) => {
           setUserData(val);
           setuserPosts(val.data.posts.filter((post) => post.active));
@@ -141,7 +141,7 @@ const Register = (props) => {
             <h3>Register</h3>
           </Heading>
           <Form>
-            <div class="modal">
+            <div className="modal">
               <form onSubmit={registerUser}>
                 <div>
                   <Label>Username</Label>
@@ -175,8 +175,7 @@ const Register = (props) => {
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                        registerUser();
-                        // window.location.href = "/";
+                        window.location.href = "/";
                       }}
                     >
                       Cancel
@@ -201,16 +200,18 @@ const Register = (props) => {
                     <LockOpenRoundedIcon
                       style={{ color: "white", fontSize: 30 }}
                     ></LockOpenRoundedIcon>
-                    <Link
-                      to="/"
-                      style={{ textDecoration: "none" }}
-                      className="btn btn-primary"
-                      onClick={() => {
-                        registerUser();
+                    <Button
+                      variant="contained"
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
                       }}
+                      className="btn btn-primary"
+                      type="submit"
                     >
-                      Register
-                    </Link>
+                      Submit
+                    </Button>
                   </FooterButton>
                 </Footer>
               </form>

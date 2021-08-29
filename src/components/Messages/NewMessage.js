@@ -78,11 +78,11 @@ const NewMessage = (props) => {
               placeholder="Contact owner"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-            />
+            ></Input>
+            <Button type="submit">Send</Button>
           </div>
         </form>
       )}
-      {author_id !== userId && <Button type="submit">Send</Button>}
     </Section>
   );
 };

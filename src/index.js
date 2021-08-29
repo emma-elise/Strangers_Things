@@ -189,6 +189,10 @@ const App = () => {
           <Switch>
             <Route path="/users/register">
               <Register
+                setUserLoggedIn={setUserLoggedIn}
+                setUserId={setUserId}
+                setuserPosts={setuserPosts}
+                setUserData={setUserData}
                 username={username}
                 password={password}
                 setUsername={setUsername}

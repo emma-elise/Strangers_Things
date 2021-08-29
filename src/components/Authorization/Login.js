@@ -37,8 +37,6 @@ const Heading = styled.div`
   align-items: center;
   justify-content: flex-start;
   font-size: 24px;
-  /* margin-bottom: 6px; */
-  /* padding-bottom: 6px; */
   border-bottom: 1px solid #888;
 `;
 
@@ -113,7 +111,6 @@ const Login = (props) => {
         const token = response.data.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("name", username);
-        localStorage.setItem("id", userId);
         setformsubmitted(true);
       })
       .catch((error) => {
