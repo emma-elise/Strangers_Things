@@ -183,15 +183,20 @@ const Login = (props) => {
                   </FooterButton>
                   <FooterButton>
                     <CreateRoundedIcon
-                      style={{ color: "white", fontSize: 30 }}
-                    ></CreateRoundedIcon>
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
+                      }}
+                      ></CreateRoundedIcon>
                     <Link
                       to="/users/register"
-                      style={{ textDecoration: "none" }}
-                      className="btn btn-primary"
-                      onClick={() => {
-                        window.location.href = "/users/register";
+                      style={{
+                        textDecoration: "none",
+                        backgroundColor: "black",
+                        color: "white",
                       }}
+                      className="btn btn-primary"
                     >
                       Register
                     </Link>
