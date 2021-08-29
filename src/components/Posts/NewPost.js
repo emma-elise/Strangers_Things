@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router";
 
 const Modal = styled.div`
@@ -35,8 +35,6 @@ const Heading = styled.div`
   align-items: center;
   justify-content: flex-start;
   font-size: 24px;
-  /* margin-bottom: 6px; */
-  /* padding-bottom: 6px; */
   border-bottom: 1px solid #888;
 `;
 
@@ -89,7 +87,7 @@ const NewPost = (props) => {
   const [location, setLocation] = useState("");
   const [willDeliver, setWillDeliver] = useState("");
   const token = localStorage.getItem("token");
-  const history = useHistory()
+  const history = useHistory();
   const validationHandler = () => {
     if (title.length > 0 && description.length > 0 && price.length > 0) {
       return true;
@@ -98,8 +96,8 @@ const NewPost = (props) => {
   };
   const postHandler = async (event) => {
     event.preventDefault();
-    if(validationHandler()){
-      try{
+    if (validationHandler()) {
+      try {
         const body = JSON.stringify({
           post: {
             title: title,
@@ -117,14 +115,13 @@ const NewPost = (props) => {
           },
         };
 
-        const response = axios
-          .post(
-            "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
-            body,
-            headers
-          )
+        const response = axios.post(
+          "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
+          body,
+          headers
+        );
         const obj = await response;
-        const post= obj.data.data.post
+        const post = obj.data.data.post;
         setuserPosts([post, ...userposts]);
         setPostList([post, ...postList]);
         setTitle("");
@@ -132,15 +129,13 @@ const NewPost = (props) => {
         setPrice("");
         setLocation("");
         setWillDeliver("");
-        history.push("/")
-        }
-        catch (error){
-          throw error
-        }
+        history.push("/");
+      } catch (error) {
+        throw error;
+      }
+    } else {
+      alert("Please Fill Out Form");
     }
-    else{
-      alert("Please Fill Out Form");}
-    
   };
   return (
     <Modal>
@@ -203,27 +198,25 @@ const NewPost = (props) => {
                     to="/"
                     style={{ textDecoration: "none" }}
                     className="btn btn-primary"
-                    onClick={() => {
-                      // window.location.href = "/";
-                    }}
+                    onClick={() => {}}
                   >
                     Cancel
                   </Link>
                 </FooterButton>
                 <FooterButton>
-                   <CheckRoundedIcon
+                  <CheckRoundedIcon
                     style={{ color: "white", fontSize: 30 }}
-                  >
-                  </CheckRoundedIcon>
-                  {/* <Link
-                    to="/"
-                    style={{ textDecoration: "none" }}
+                  ></CheckRoundedIcon>
+                  <Button
+                    variant="contained"
+                    style={{
+                      textDecoration: "none",
+                      backgroundColor: "black",
+                      color: "white",
+                    }}
                     className="btn btn-primary"
-                    onClick={}
+                    type="submit"
                   >
-                    Submit
-                  </Link> */}
-                  <Button variant="contained" style={{ textDecoration: "none", backgroundColor: 'black', color: "white" }} className="btn btn-primary" type="submit">
                     Submit
                   </Button>
                 </FooterButton>

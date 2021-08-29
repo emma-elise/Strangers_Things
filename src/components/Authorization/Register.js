@@ -1,16 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import BASE_URL from "../api";
-import { withRouter } from "react-router";
+import BASE_URL from "../../api";
 import { Link } from "react-router-dom";
-import { fetchPosts, fetchUserData } from "../api";
+import { fetchUserData } from "../../api";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import styled from "styled-components";
-import Button from '@material-ui/core/Button';
-
-// import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 const Modal = styled.div`
   position: absolute;
@@ -86,39 +82,36 @@ const FooterButton = styled.div`
   }
 `;
 
-const Login = (props) => {
+const Register = (props) => {
   const {
     username,
     setUsername,
     password,
     setPassword,
     showUser,
+    setShowUser,
+    localUser,
+    setLocaluser,
     setUserData,
     setUserId,
     setuserPosts,
-    setUserLoggedIn
   } = props;
-  // if (localStorage.getItem("token") !== null) userLoggedIn;
   const [formSubmitted, setformsubmitted] = useState(false);
-  const loginUser = (event, history) => {
-    event.preventDefault();
+  const registerUser = (event, history) => {
     console.log("form submitted");
 
     const body = JSON.stringify({
       user: { username: username, password: password },
     });
     const headers = { headers: { "Content-Type": "application/json" } };
-    // history.pushState("/");
-    // <Link to="/" />;
     axios
-      .post(`${BASE_URL}/users/login`, body, headers)
+      .post(`${BASE_URL}/users/register`, body, headers)
       .then((response) => {
         console.log(response);
         const token = response.data.data.token;
         localStorage.setItem("token", token);
         localStorage.setItem("name", username);
         setformsubmitted(true);
-        // this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -127,7 +120,7 @@ const Login = (props) => {
   useEffect(() => {
     if (formSubmitted) {
       setUserLoggedIn(true);
-      fetchUserData(localStorage.getItem('token'))
+      fetchUserData()
         .then((val) => {
           setUserData(val);
           setuserPosts(val.data.posts.filter((post) => post.active));
@@ -145,11 +138,11 @@ const Login = (props) => {
         <section className="login">
           <Heading>
             <h1>{showUser}</h1>
-            <h3>Login</h3>
+            <h3>Register</h3>
           </Heading>
           <Form>
-            <div className="modal">
-              <form onSubmit={loginUser}>
+            <div class="modal">
+              <form onSubmit={registerUser}>
                 <div>
                   <Label>Username</Label>
                   <br></br>
@@ -182,8 +175,8 @@ const Login = (props) => {
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                    
-                        window.location.href = "/";
+                        registerUser();
+                        // window.location.href = "/";
                       }}
                     >
                       Cancel
@@ -198,32 +191,26 @@ const Login = (props) => {
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                        window.location.href = "/users/register";
+                        window.location.href = "/users/login";
                       }}
                     >
-                      Register
+                      Login
                     </Link>
                   </FooterButton>
                   <FooterButton>
                     <LockOpenRoundedIcon
                       style={{ color: "white", fontSize: 30 }}
-                    >
-                      {/* <span class="action text">Log In</span> */}
-                    </LockOpenRoundedIcon>
-                    {/* <Link
+                    ></LockOpenRoundedIcon>
+                    <Link
                       to="/"
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                        loginUser();
-                        // window.location.href = "/";
+                        registerUser();
                       }}
                     >
-                      Login
-                    </Link> */}
-                    <Button variant="contained" style={{ textDecoration: "none", backgroundColor: 'black', color: "white" }} className="btn btn-primary" type="submit">
-                    Submit
-                  </Button>
+                      Register
+                    </Link>
                   </FooterButton>
                 </Footer>
               </form>
@@ -235,4 +222,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Register;

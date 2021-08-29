@@ -44,16 +44,8 @@ const PostsList = ({
 }) => {
   return (
     <div>
-      <Route exact path="/">
-        {/* <PostsAllContainer>
-          <h3> Posts - All </h3>
-        </PostsAllContainer> */}
-      </Route>
-      <Route path="/posts">
-        {/* <PostsMyContainer>
-          <h1> MY POSTS </h1>
-        </PostsMyContainer> */}
-      </Route>
+      <Route exact path="/"></Route>
+      <Route path="/posts"></Route>
       <PostContainerList>
         {postList.map((post) => {
           return (

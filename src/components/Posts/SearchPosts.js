@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
-// import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-
-// import { FontAwesomeIcon } from "@fontwesome/react-fontawesome";
 
 const SearchBar = styled.section`
   font-family: "ABeeZee", sans-serif;
@@ -14,11 +10,18 @@ const SearchBar = styled.section`
   text-align: center;
   border-radius: 6px 6px 6px 6px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
+  flex-direction: row;
   height: 3rem;
   font-size: 1.5rem;
+`;
+
+const Input = styled.input`
+  padding-left: 0.5rem;
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35vw;
 `;
 
 const Search = (props) => {
@@ -44,21 +47,19 @@ const Search = (props) => {
   };
 
   return (
-    <SearchBar>
-      <form>
-        <div>
-          <label>Search </label>
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => {
-              reset(e.target.value);
-            }}
-          />
-        </div>
-      </form>
-    </SearchBar>
+    <form>
+      <SearchBar>
+        <label>Looking for something?</label>
+        <Input
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={(e) => {
+            reset(e.target.value);
+          }}
+        />
+      </SearchBar>
+    </form>
   );
 };
 
