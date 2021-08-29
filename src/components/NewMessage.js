@@ -14,10 +14,9 @@ const NewMessage = (props)=>{
     const MessageHandler = async (event) => {
     event.preventDefault();
     if(author_id ===userId){
-        alert('user post')
+        alert('This is your Post!')
     }
     else if (validationHandler()) {
-      console.log("form submitted");
       try {
         const response = await fetch(
           `https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts/${post_id}/messages`,

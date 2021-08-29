@@ -303,7 +303,7 @@ const App = () => {
               setuserPosts={setuserPosts}
             ></NewPost> */}
           </Route>
-        </Body>
+        
         <Switch>
           <Route path="/users/register">
             <Register
@@ -354,6 +354,7 @@ const App = () => {
             <h1>404 Error - Page Not Found!</h1>
           </Route>
         </Switch>
+        </Body>
       </Container>
     </Router>
   );
