@@ -49,18 +49,16 @@ const Delete = (props) => {
   };
   return (
     <div>
-         <button
-      type="button"
-      className="btn btn-delete"
-      onClick={() => deleteHandler(id)}
-    >
-      Delete
-    </button>
+    <Button
+        type="button"
+        className="btn btn-delete"
+        onClick={() => deleteHandler(id)}
+      >
         <DeleteForeverRoundedIcon
           style={{ color: "white", fontSize: 30 }}
         ></DeleteForeverRoundedIcon>{" "}
-  
-    </div>
+      </Button>
+      </div>
   );
 };
 
