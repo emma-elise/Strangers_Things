@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "../api";
 import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import styled from "styled-components";
 
 // import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
@@ -165,6 +166,7 @@ const Login = (props) => {
                   <br></br>
                   <Input
                     type="password"
+                    required="required"
                     value={password}
                     onInput={(event) => {
                       setPassword(event.target.value);
@@ -189,10 +191,25 @@ const Login = (props) => {
                     </Link>
                   </FooterButton>
                   <FooterButton>
+                    <CreateRoundedIcon
+                      style={{ color: "white", fontSize: 30 }}
+                    ></CreateRoundedIcon>
+                    <Link
+                      to="/"
+                      style={{ textDecoration: "none" }}
+                      className="btn btn-primary"
+                      onClick={() => {
+                        window.location.href = "/users/register";
+                      }}
+                    >
+                      Register
+                    </Link>
+                  </FooterButton>
+                  <FooterButton>
                     <LockOpenRoundedIcon
                       style={{ color: "white", fontSize: 30 }}
                     >
-                      <span class="action text">Log In</span>
+                      {/* <span class="action text">Log In</span> */}
                     </LockOpenRoundedIcon>
                     <Link
                       to="/"
