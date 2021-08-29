@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const NewPost = (props) => {
   const { setuserPosts, setPostList, postList, userposts } = props;
@@ -7,7 +8,7 @@ const NewPost = (props) => {
   const [price, setPrice] = useState("");
   const [location, setLocation] = useState("");
   const [willDeliver, setWillDeliver] = useState("");
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
   const validationHandler = () => {
     if (title.length > 0 && description.length > 0 && price.length > 0) {
@@ -17,30 +18,31 @@ const NewPost = (props) => {
   };
   const postHandler = async (event) => {
     event.preventDefault();
-    if (validationHandler()) {
-      try {
-        const response = await fetch(
-          "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              post: {
-                title: title,
-                description: description,
-                price: price,
-                ...(location && { location: location }),
-                ...(willDeliver && { willDeliver: willDeliver }),
-              },
-            }),
-          }
-        );
 
-        const obj = await response.json();
-        const post = obj.data.post;
+    const body = JSON.stringify({
+      post: {
+        title: title,
+        description: description,
+        price: price,
+        willDeliver: willDeliver,
+      },
+    });
+
+    const headers = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .post(
+        "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
+        body,
+        headers
+      )
+      .then((response) => {
+        const post = response.data.post;
         setuserPosts([post, ...userposts]);
         setPostList([post, ...postList]);
         setTitle("");
@@ -48,12 +50,49 @@ const NewPost = (props) => {
         setPrice("");
         setLocation("");
         setWillDeliver("");
-      } catch (error) {
-        throw error;
-      }
-    } else {
-      alert("Please Fill Out Form");
-    }
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
+    // if (validationHandler()) {
+    //   try {
+    //     const response = await fetch(
+    //       "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
+    //       {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //         body: JSON.stringify({
+    //           post: {
+    //             title: title,
+    //             description: description,
+    //             price: price,
+    //             ...(location && { location: location }),
+    //             ...(willDeliver && { willDeliver: willDeliver }),
+    //           },
+    //         }),
+    //       }
+    //     );
+
+    //     const obj = await response.json();
+    //     const post = obj.data.post;
+    //     setuserPosts([post, ...userposts]);
+    //     setPostList([post, ...postList]);
+    //     setTitle("");
+    //     setDescription("");
+    //     setPrice("");
+    //     setLocation("");
+    //     setWillDeliver("");
+    //     console.log(obj.data.post);
+    //   } catch (error) {
+    //     throw error;
+    //   }
+    // } else {
+    //   alert("Please Fill Out Form");
+    // }
     // Check that the user entered stuff into the inputs
     // Validate data
     // Make a ajax request to the backend

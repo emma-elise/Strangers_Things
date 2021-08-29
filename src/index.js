@@ -10,81 +10,143 @@ import Search from "./components/To-Sort/Search";
 import Logout from "./components/logout";
 import styled from "styled-components";
 import MessagesList from "./components/Messages/MessagesList";
+import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
+import LibraryBooksRoundedIcon from "@material-ui/icons/LibraryBooksRounded";
+import AddCircleRoundedIcon from "@material-ui/icons/AddCircleRounded";
+import ChatRoundedIcon from "@material-ui/icons/ChatRounded";
+import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
+import LockRoundedIcon from "@material-ui/icons/LockRounded";
 
 const Container = styled.div`
-  background-color: #613659;
-  /* height: 100vh; */
-  height: 100%;
-  overflow: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 100vh;
+  max-height: 100%;
+  position: relative;
 `;
 
 const Header = styled.header`
-  background-color: #211522;
-  color: white;
-  font-size: 1em;
-  height: 92px;
-  border-radius: 3px;
-  font-family: "Akaya Kanadaka";
-
+  grid-row: 1;
+  grid-column: 1 / 3;
+  font-family: "Akaya Telivigala", cursive;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 48px;
+  text-align: center;
+  padding: 0.25em 0;
+  background: #211522;
+  color: #fafafa;
+  /* 
   a:visited {
     color: white;
   }
 
   a:hover {
     color: #c197d2;
-  }
+  } */
 `;
 
 const HeaderTopLayer = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: space-between;
   text-decoration: none;
   font-size: 1.5rem;
-  color: white;
+  color: white; */
 
   & > * + * {
+    /* margin-left: 1rem; */
   }
 `;
 
 const HeaderTopLayerLeft = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; */
 
   & > * + * {
-    margin-left: 1rem;
+    /* margin: 1rem; */
   }
 `;
 
 const HeaderTopLayerRight = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: center; */
 
   & > * + * {
-    margin-right: 1rem;
+    /* margin: 1rem; */
   }
 `;
 
 const HeaderBottomLayer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
 `;
 
 const LeftDrawer = styled.div`
   grid-row: 2;
   grid-column: 1;
+  display: flex;
+  background: #613659;
+  ${(props) => {
+    if (props.toggle) {
+    }
+  }}
   transition: width 0.5s ease, background 0.5s ease;
   width: 64px;
-  background-color: #613659;
-  display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
+
+  :hover {
+    width: 80px;
+    background: #d3b1c2;
+  }
 `;
 
-const Body = styled.div``;
+const LeftDrawerOpen = styled.div`
+  width: 300px;
+  border-radius: unset;
+  transition: width 0.5s ease, background 0.5s ease;
+`;
+
+const Button = styled.div`
+  padding: 0.75rem;
+  background: #1b1b1b;
+  color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-family: "ABeeZee", sans-serif;
+  border-radius: 6px;
+  margin: 8px;
+`;
+
+const ButtonStretched = styled.div`
+  width: 284px;
+`;
+
+const Icon = styled.div``;
+
+const Body = styled.div`
+  grid-row: 2;
+  grid-column: 2;
+  /* grid-column: 2 / 3; */
+  background: #c197d2;
+  font-size: 16px;
+  padding: 8px;
+  display: grid;
+  grid-gap: 8px;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+`;
 
 const App = () => {
   const [masterPostList, setMasterPostList] = useState([]);
@@ -127,33 +189,22 @@ const App = () => {
     console.log(userLoggedIn, userData, "here");
   }, [userLoggedIn]);
 
-  // const useToggle = (initialState = false) => {
-  //   const [state, setState] = useState(initialState);
-  //   const toggle = useCallback(() => setState((state) => !state), []);
-  //   return [state, toggle];
-  // };
-
-  // const [userLoggedIn, setUserLoggedIn] = useToggle();
-
-  // TODO: Look at useEffect for re-rendering pieces of header, etc. upon changes; change header piece into component and pass in userLoggedIn as prop => prop change = re-render
-
   return (
     <Router>
       <Container>
         <Header>
-          <HeaderTopLayer>
+          {/* <HeaderTopLayer>
             <HeaderTopLayerLeft>
-              <Link to="/">Home</Link>
               {/* {localStorage.getItem("token") !== null && (
                 <Link to="/posts">Posts</Link>
               )}
               {localStorage.getItem("token") !== null && (
                 <Link to="/posts/POST_ID/messages">Messages</Link>
               )} */}
-              {userLoggedIn && <Link to="/posts">Posts</Link>}
+          {/* {userLoggedIn && <Link to="/posts">Posts</Link>}
               {userLoggedIn && <Link to="/messages">Messages</Link>}
-            </HeaderTopLayerLeft>
-            {/* <HeaderTopLayerRight>
+            </HeaderTopLayerLeft> */}
+          {/* <HeaderTopLayerRight>
               {localStorage.getItem("token") === null && (
                 <Link to="/users/register">Sign Up</Link>
               )}
@@ -162,7 +213,7 @@ const App = () => {
               )}
               {localStorage.getItem("token") !== null && <Logout></Logout>}
             </HeaderTopLayerRight> */}
-            <HeaderTopLayerRight>
+          {/* <HeaderTopLayerRight>
               {!userLoggedIn && <Link to="/users/register">Sign Up</Link>}
               {!userLoggedIn && <Link to="/users/login">Login</Link>}
               {userLoggedIn && (
@@ -170,12 +221,53 @@ const App = () => {
               )}
             </HeaderTopLayerRight>
           </HeaderTopLayer>
-          <HeaderBottomLayer>
-            <h1>Stranger's Things</h1>
-            <Search postList={masterPostList} setPostList={setPostList} />
-          </HeaderBottomLayer>
+          <HeaderBottomLayer> */}
+          Stranger's Things
+          {/* <Search postList={masterPostList} setPostList={setPostList} />
+          </HeaderBottomLayer> */}
         </Header>
-        <LeftDrawer></LeftDrawer>
+        <LeftDrawer>
+          <Button>
+            <HomeRoundedIcon style={{ color: "white", fontSize: 30 }}>
+              <Link to="/">Home</Link>
+            </HomeRoundedIcon>
+          </Button>
+          {userLoggedIn && (
+            <Button>
+              <AddCircleRoundedIcon style={{ color: "white", fontSize: 30 }} />
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <Link to="/posts">
+                <LibraryBooksRoundedIcon
+                  style={{ color: "white", fontSize: 30 }}
+                />
+              </Link>
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <Link to="/messages">
+                <ChatRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              </Link>
+            </Button>
+          )}
+          {!userLoggedIn && (
+            <Button>
+              <Link to="/users/login">
+                <LockOpenRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              </Link>
+            </Button>
+          )}
+          {userLoggedIn && (
+            <Button>
+              <Logout setUserLoggedIn={setUserLoggedIn}>
+                <LockRoundedIcon style={{ color: "white", fontSize: 30 }} />
+              </Logout>
+            </Button>
+          )}
+        </LeftDrawer>
         <Body>
           <Route exact path="/">
             {/* for the main page, there will be another PostsList comp used for Users posts */}
@@ -188,12 +280,12 @@ const App = () => {
 
             {/* My posts page */}
 
-            <NewPost
+            {/* <NewPost
               setPostList={setPostList}
               userposts={userposts}
               postList={postList}
               setuserPosts={setuserPosts}
-            ></NewPost>
+            ></NewPost> */}
           </Route>
         </Body>
         <Switch>
@@ -230,7 +322,6 @@ const App = () => {
             <div>{userData ? <MessagesList userData={userData} /> : null}</div>
           </Route>
           <Route exact path="/">
-            <Logout></Logout>
             {/* <Home /> */}
           </Route>
           <Route path="*">
