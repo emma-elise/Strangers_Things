@@ -213,7 +213,7 @@ const App = () => {
               ></PostsList>
               </Route>
         <Route path="/messages">
-          <div>{ userData ? <MessagesList userData={userData}/>: null}</div>
+          { userData ? <MessagesList userData={userData}/>: null}
             
         </Route>
         <Route exact path="/">
