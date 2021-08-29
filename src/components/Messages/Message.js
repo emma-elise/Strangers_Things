@@ -37,15 +37,6 @@ const Content = styled.div`
   font-family: "ABeeZee", sans-serif;
 `;
 
-const MessageBody = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  background: #c197d2;
-  padding: 8px;
-  border-radius: 0 0 0 0;
-`;
-
 const Message = (prop) => {
   const { message } = prop;
   return (

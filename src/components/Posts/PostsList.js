@@ -11,6 +11,7 @@ const PostContainerList = styled.div`
   padding: 0.5em;
   background: #613659;
   overflow-y: scroll;
+  height: 86vh;
 `;
 
 const PostsAllContainer = styled.div`

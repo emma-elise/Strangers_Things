@@ -37,9 +37,8 @@ const PostMessage = styled.div`
 
 const Post = (props) => {
   const {
-    posts: { title, location, description, price, _id, author, author_id },
+    posts: { title, location, description, price, _id, author, willDeliver },
     userLoggedIn,
-    userPosts,
     setuserPosts,
     postList,
     setPostList,
@@ -73,6 +72,9 @@ const Post = (props) => {
         </div>
         <div>
           <strong>From:</strong> {author.username}
+        </div>
+        <div>
+          <strong>Will Deliver:</strong> {willDeliver ? "Yes" : "No"}
         </div>
       </PostContent>
       <PostMessage>
