@@ -186,7 +186,7 @@ const Login = (props) => {
                       style={{ color: "white", fontSize: 30 }}
                     ></CreateRoundedIcon>
                     <Link
-                      to="/"
+                      to="/users/register"
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
