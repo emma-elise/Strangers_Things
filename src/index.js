@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { fetchPosts, fetchUserData } from "./api";
@@ -109,6 +109,7 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
 
   useEffect(() => {
     fetchPosts()
@@ -141,7 +142,7 @@ const App = () => {
           </Button>
           {userLoggedIn && (
             <Button>
-              <Link to="/posts/new">
+              <Link to="/profile/posts/new">
                 <AddCircleRoundedIcon
                   style={{ color: "white", fontSize: 30 }}
                 />
@@ -150,7 +151,7 @@ const App = () => {
           )}
           {userLoggedIn && (
             <Button>
-              <Link to="/posts">
+              <Link to="/profile">
                 <LibraryBooksRoundedIcon
                   style={{ color: "white", fontSize: 30 }}
                 />
@@ -211,7 +212,7 @@ const App = () => {
                 setPassword={setPassword}
               ></Login>
             </Route>
-            <Route path="/posts/new">
+            <Route path="/profile/posts/new">
               <NewPost
                 setPostList={setPostList}
                 userposts={userposts}
@@ -219,7 +220,7 @@ const App = () => {
                 setuserPosts={setuserPosts}
               ></NewPost>
             </Route>
-            <Route path="/posts">
+            <Route path="/profile">
               <PostsList
                 mainPageList={postList}
                 postList={userposts}
