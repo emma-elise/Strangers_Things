@@ -183,9 +183,11 @@ const App = () => {
           </div>
           <Route exact path="/">
             <PostsList
+              mainPageList={postList}
               postList={postList}
               setPostList={setPostList}
               userLoggedIn={userLoggedIn}
+              setuserPosts={setuserPosts}
               userId={userId}
             ></PostsList>
           </Route>

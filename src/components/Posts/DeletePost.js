@@ -33,6 +33,9 @@ const Delete = (props) => {
       }
     );
     const data = await response.json();
+      console.log(data)
+      console.log(postList)
+      console.log(mainPageList)
     if (data) {
       const newPosts = postList.filter((post) => {
         return post._id !== postToDelete;
@@ -46,15 +49,17 @@ const Delete = (props) => {
   };
   return (
     <div>
-      <Button
-        type="button"
-        className="btn btn-delete"
-        onClick={() => deleteHandler(id)}
-      >
+         <button
+      type="button"
+      className="btn btn-delete"
+      onClick={() => deleteHandler(id)}
+    >
+      Delete
+    </button>
         <DeleteForeverRoundedIcon
           style={{ color: "white", fontSize: 30 }}
         ></DeleteForeverRoundedIcon>{" "}
-      </Button>
+  
     </div>
   );
 };

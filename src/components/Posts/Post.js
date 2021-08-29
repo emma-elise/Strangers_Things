@@ -45,8 +45,7 @@ const Post = (props) => {
     mainPageList,
     userId,
   } = props;
-
-  return (
+  return (  
     <PostContainer>
       <PostTitle>
         <h3>{title}</h3>
