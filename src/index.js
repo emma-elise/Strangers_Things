@@ -183,7 +183,7 @@ const App = () => {
       .catch((error) => console.error(error));
     if (localStorage.getItem("token")) {
       setUserLoggedIn(true);
-      fetchUserData()
+      fetchUserData(localStorage.getItem("token"))
         .then((val) => {
           setUserData(val);
           setuserPosts(val.data.posts.filter((post) => post.active));
@@ -198,10 +198,6 @@ const App = () => {
     //
     //put the token to local storage? (maybe not here) and setLocalToken based off the token in local storage
   }, []);
-
-  useEffect(() => {
-    console.log(userLoggedIn, userData, "here");
-  }, [userLoggedIn]);
 
   return (
     <Router>
@@ -294,7 +290,7 @@ const App = () => {
             <PostsList
               postList={postList}
               setPostList={setPostList}
-              userLoggedIn={userLoggedIn}
+              userLoggedIn={userLoggedIn} 
               userId={userId}
             ></PostsList>
 
@@ -307,7 +303,7 @@ const App = () => {
               setuserPosts={setuserPosts}
             ></NewPost> */}
           </Route>
-        </Body>
+        
         <Switch>
           <Route path="/users/register">
             <Register
@@ -330,12 +326,14 @@ const App = () => {
             ></Login>
           </Route>
           <Route path="/posts/new">
-            <NewPost>
+
+           <NewPost
               setPostList={setPostList}
               userposts={userposts}
               postList={postList}
               setuserPosts={setuserPosts}
-            </NewPost>
+            ></NewPost>
+
           </Route>
           <Route path="/posts">
             <PostsList
@@ -356,6 +354,7 @@ const App = () => {
             <h1>404 Error - Page Not Found!</h1>
           </Route>
         </Switch>
+        </Body>
       </Container>
     </Router>
   );

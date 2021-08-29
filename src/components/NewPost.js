@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
+import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router";
 
 const Modal = styled.div`
   position: absolute;
@@ -87,7 +89,7 @@ const NewPost = (props) => {
   const [location, setLocation] = useState("");
   const [willDeliver, setWillDeliver] = useState("");
   const token = localStorage.getItem("token");
-
+  const history = useHistory()
   const validationHandler = () => {
     if (title.length > 0 && description.length > 0 && price.length > 0) {
       return true;
@@ -96,31 +98,33 @@ const NewPost = (props) => {
   };
   const postHandler = async (event) => {
     event.preventDefault();
+    if(validationHandler()){
+      try{
+        const body = JSON.stringify({
+          post: {
+            title: title,
+            description: description,
+            price: price,
+            ...(location && { location: location }),
+            ...(willDeliver && { willDeliver: willDeliver }),
+          },
+        });
 
-    const body = JSON.stringify({
-      post: {
-        title: title,
-        description: description,
-        price: price,
-        willDeliver: willDeliver,
-      },
-    });
+        const headers = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
-    const headers = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    axios
-      .post(
-        "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
-        body,
-        headers
-      )
-      .then((response) => {
-        const post = response.data.post;
+        const response = axios
+          .post(
+            "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
+            body,
+            headers
+          )
+        const obj = await response;
+        const post= obj.data.data.post
         setuserPosts([post, ...userposts]);
         setPostList([post, ...postList]);
         setTitle("");
@@ -128,55 +132,15 @@ const NewPost = (props) => {
         setPrice("");
         setLocation("");
         setWillDeliver("");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-
-    // if (validationHandler()) {
-    //   try {
-    //     const response = await fetch(
-    //       "https://strangers-things.herokuapp.com/api/2105-VPI-RM-WEB-PT/posts",
-    //       {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //         body: JSON.stringify({
-    //           post: {
-    //             title: title,
-    //             description: description,
-    //             price: price,
-    //             ...(location && { location: location }),
-    //             ...(willDeliver && { willDeliver: willDeliver }),
-    //           },
-    //         }),
-    //       }
-    //     );
-
-    //     const obj = await response.json();
-    //     const post = obj.data.post;
-    //     setuserPosts([post, ...userposts]);
-    //     setPostList([post, ...postList]);
-    //     setTitle("");
-    //     setDescription("");
-    //     setPrice("");
-    //     setLocation("");
-    //     setWillDeliver("");
-    //     console.log(obj.data.post);
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // } else {
-    //   alert("Please Fill Out Form");
-    // }
-    // Check that the user entered stuff into the inputs
-    // Validate data
-    // Make a ajax request to the backend
-    // Backend will return a response letting us know if the user was authenticated or not
-
-    // setSubmitForm(true);
+        history.push("/")
+        }
+        catch (error){
+          throw error
+        }
+    }
+    else{
+      alert("Please Fill Out Form");}
+    
   };
   return (
     <Modal>
@@ -184,7 +148,7 @@ const NewPost = (props) => {
         <section className="NewPost">
           <Heading>{<h3>New Post</h3>}</Heading>
           <Form>
-            <form onSubmit={postHandler}>
+            <form id="my_form" onSubmit={postHandler}>
               <div>
                 <Label>Title </Label>
                 <Input
@@ -247,21 +211,21 @@ const NewPost = (props) => {
                   </Link>
                 </FooterButton>
                 <FooterButton>
-                  <CheckRoundedIcon
+                   <CheckRoundedIcon
                     style={{ color: "white", fontSize: 30 }}
-                  ></CheckRoundedIcon>
-                  <Link
+                  >
+                  </CheckRoundedIcon>
+                  {/* <Link
                     to="/"
                     style={{ textDecoration: "none" }}
                     className="btn btn-primary"
-                    onClick={() => {
-                      NewPost();
-                      // window.location.href = "/";
-                    }}
+                    onClick={}
                   >
                     Submit
-                  </Link>
-                  {/* <button type="submit">Submit</button> */}
+                  </Link> */}
+                  <Button variant="contained" style={{ textDecoration: "none", backgroundColor: 'black', color: "white" }} className="btn btn-primary" type="submit">
+                    Submit
+                  </Button>
                 </FooterButton>
               </Footer>
             </form>

@@ -8,6 +8,7 @@ import LockOpenRoundedIcon from "@material-ui/icons/LockOpenRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import CreateRoundedIcon from "@material-ui/icons/CreateRounded";
 import styled from "styled-components";
+import Button from '@material-ui/core/Button';
 
 // import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
@@ -92,17 +93,15 @@ const Login = (props) => {
     password,
     setPassword,
     showUser,
-    setShowUser,
-    localUser,
-    setLocaluser,
     setUserData,
     setUserId,
     setuserPosts,
+    setUserLoggedIn
   } = props;
   // if (localStorage.getItem("token") !== null) userLoggedIn;
   const [formSubmitted, setformsubmitted] = useState(false);
   const loginUser = (event, history) => {
-    // event.preventDefault();
+    event.preventDefault();
     console.log("form submitted");
 
     const body = JSON.stringify({
@@ -128,7 +127,7 @@ const Login = (props) => {
   useEffect(() => {
     if (formSubmitted) {
       setUserLoggedIn(true);
-      fetchUserData()
+      fetchUserData(localStorage.getItem('token'))
         .then((val) => {
           setUserData(val);
           setuserPosts(val.data.posts.filter((post) => post.active));
@@ -149,7 +148,7 @@ const Login = (props) => {
             <h3>Login</h3>
           </Heading>
           <Form>
-            <div class="modal">
+            <div className="modal">
               <form onSubmit={loginUser}>
                 <div>
                   <Label>Username</Label>
@@ -183,8 +182,8 @@ const Login = (props) => {
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
                       onClick={() => {
-                        loginUser();
-                        // window.location.href = "/";
+                    
+                        window.location.href = "/";
                       }}
                     >
                       Cancel
@@ -211,7 +210,7 @@ const Login = (props) => {
                     >
                       {/* <span class="action text">Log In</span> */}
                     </LockOpenRoundedIcon>
-                    <Link
+                    {/* <Link
                       to="/"
                       style={{ textDecoration: "none" }}
                       className="btn btn-primary"
@@ -221,7 +220,10 @@ const Login = (props) => {
                       }}
                     >
                       Login
-                    </Link>
+                    </Link> */}
+                    <Button variant="contained" style={{ textDecoration: "none", backgroundColor: 'black', color: "white" }} className="btn btn-primary" type="submit">
+                    Submit
+                  </Button>
                   </FooterButton>
                 </Footer>
               </form>
