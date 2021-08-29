@@ -53,7 +53,10 @@ const Input = styled.input`
   width: 460px;
   padding: 8px;
   font-size: 22px;
+  margin-bottom: 8px;
 `;
+
+const RadioInput = styled.input``;
 
 const Footer = styled.div`
   display: flex;
@@ -145,49 +148,60 @@ const NewPost = (props) => {
           <Form>
             <form id="my_form" onSubmit={postHandler}>
               <div>
-                <Label>Title </Label>
+                <Label>Title*</Label>
                 <Input
                   type="text"
                   placeholder="Title"
+                  required="required"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
               <div>
-                <Label>Description </Label>
+                <Label>Description*</Label>
                 <Input
                   type="text"
                   placeholder="Description"
+                  required="required"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
               <div>
-                <Label>Price </Label>
+                <Label>Price*</Label>
                 <Input
                   type="text"
                   placeholder="Price"
+                  required="required"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
               <div>
-                <Label>Location </Label>
+                <Label>Location</Label>
                 <Input
                   type="text"
-                  placeholder="Location (optional)"
+                  placeholder="Location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                 />
               </div>
               <div>
                 <Label>Will Deliver?</Label>
-                <Input
-                  type="text"
-                  placeholder="Will Deliver? (optional)"
+                <RadioInput
+                  type="radio"
+                  value="true"
                   value={willDeliver}
                   onChange={(e) => setWillDeliver(e.target.value)}
                 />
+                Yes
+                <RadioInput
+                  type="radio"
+                  value="false"
+                  value={willDeliver}
+                  onChange={(e) => setWillDeliver(e.target.value)}
+                />
+                No
               </div>
               <Footer>
                 <FooterButton>
